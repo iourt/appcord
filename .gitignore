@@ -7,3 +7,7 @@ platforms/ios/Club.xcodeproj/xcuserdata/
 platforms/ios/CordovaLib/CordovaLib.xcodeproj/xcuserdata/
 
 /www/
+platforms/ios/www/
+platforms/ios/www/
+!platforms/ios/www/cordova.js
+!platforms/ios/www/cordova_plugins.js
