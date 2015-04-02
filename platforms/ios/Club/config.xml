@@ -23,4 +23,7 @@
     </author>
     <content src="index.html" />
     <access origin="*" />
+    <feature name="NativePageTransitions">
+        <param name="ios-package" value="NativePageTransitions" />
+    </feature>
 </widget>
