@@ -1,2 +1,7 @@
 Thumbs.db
 .DS_Store
+
+#ios xcode build
+platforms/ios/Club.xcodeproj/project.xcworkspace/
+platforms/ios/Club.xcodeproj/xcuserdata/
+platforms/ios/CordovaLib/CordovaLib.xcodeproj/xcuserdata/
