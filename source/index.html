@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        <link rel="stylesheet" type="text/css" href="css/index.css" />
+        <title>Hello World</title>
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="cordova_plugins.js"></script>
+        <script type="text/javascript" src="js/zepto.min-1.1.6.js"></script>
+    </head>
+    <body>
+        <style type="text/css">
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        body{
+            padding-top: 50px;
+        }
+        .event{
+            line-height: 30px;
+        }
+        </style>
+        <ul class="event">
+            <li>phonegap不是银弹</li>
+            <li>一些比如新闻展示，和硬件交互不高</li>
+            <li>越到后面越觉得phonegap制</li>
+            <li>phonegap不是银弹</li>
+            <li>一些比如新闻展示，和硬件交互不高</li>
+            <li>越到后面越觉得phonegap制</li>
+            <li>phonegap不是银弹</li>
+            <li>一些比如新闻展示，和硬件交互不高</li>
+            <li>越到后面越觉得phonegap制</li>
+        </ul>
+        
+        <script type="text/javascript">
+        var $that = $('.event'),
+            isClick = false;
+
+        var $html = '<li>越到后面越觉得phonegap制</li>'+
+            '<li>越到后面越觉得phonegap制</li>'+
+            '<li>越到后面越觉得phonegap制</li>'+
+            '<li>越到后面越觉得phonegap制</li>'+
+            '<li>越到后面越觉得phonegap制</li>'+
+            '<li>越到后面越觉得phonegap制</li>'+
+            '<li>越到后面越觉得phonegap制</li>';
+
+        var $start = '<li>phonegap不是银弹</li>'+
+            '<li>一些比如新闻展示，和硬件交互不高</li>'+
+            '<li>越到后面越觉得phonegap制</li>'+
+            '<li>phonegap不是银弹</li>'+
+            '<li>一些比如新闻展示，和硬件交互不高</li>'+
+            '<li>越到后面越觉得phonegap制</li>'+
+            '<li>phonegap不是银弹</li>'+
+            '<li>一些比如新闻展示，和硬件交互不高</li>'+
+            '<li>越到后面越觉得phonegap制</li>';
+
+        // var options = {
+        //     "direction"        : "left", // 'left|right|up|down', default 'left' (which is like 'next')
+        //     "duration"         :  500, // in milliseconds (ms), default 400
+        //     "slowdownfactor"   :    3, // overlap views (higher number is more) or no overlap (1), default 4
+        //     "iosdelay"         :  100, // ms to wait for the iOS webview to update before animation kicks in, default 60
+        //     "androiddelay"     :  150, // same as above but for Android, default 70
+        //     "winphonedelay"    :  250, // same as above but for Windows Phone, default 200,
+        //     "fixedPixelsTop"   :    0, // the number of pixels of your fixed header, default 0 (iOS and Android)
+        //     "fixedPixelsBottom":   60  // the number of pixels of your fixed footer (f.i. a tab bar), default 0 (iOS and Android)
+        // };
+
+        // window.plugins.nativepagetransitions.slide(
+        //     options,
+        //     function (msg) {
+        //         onComplete();
+        //     },
+        //     function (msg) {
+        //         alert("error: " + msg)
+        //     }
+        // );
+
+
+
+
+
+
+        var duration = 0.5,
+            direction = "left"; 
+
+        $that.on('click', function (){
+            // setTimeout(function() {
+            //     if (isClick) {
+            //         $that.html($start);
+            //     } else {
+            //         $that.html($html);
+            //     }
+            //     isClick = !isClick;
+            // }, 50);
+
+            nativetransitions.flip(duration, direction, onComplete);
+
+            nativetransitions.curl(duration, direction, onComplete);
+
+            nativetransitions.fade(duration, onComplete);
+
+            nativetransitions.flip(duration, direction);
+
+        });
+
+        function onComplete(){
+            setTimeout(function() {
+                if (isClick) {
+                    $that.html($start);
+                } else {
+                    $that.html($html);
+                }
+                isClick = !isClick;
+            }, 50);
+        }
+        </script>
+    </body>
+</html>
