@@ -19,9 +19,10 @@ cordova plugin add https://github.com/Telerik-Verified-Plugins/NativePageTransit
 
 二、修改webView是要被禁止滚动和回弹的UIWebView：
 
-platforms/ios/CordovaLib/Classes/CDVViewController.m
+修改文件：platforms/ios/CordovaLib/Classes/CDVViewController.m
 
-for (id subview in self.webView.subviews){  //webView是要被禁止滚动和回弹的UIWebView
+代码如下：
+for (id subview in self.webView.subviews){
 
     if ([[subview class] isSubclassOfClass: [UIScrollView class]])
 
@@ -32,7 +33,9 @@ for (id subview in self.webView.subviews){  //webView是要被禁止滚动和回
 
 三、IOS7 隐藏状态栏 (电池栏)
 
-platforms/ios/Club/Club-Info.plist
+修改文件：platforms/ios/Club/Club-Info.plist
+
+方法如下：
 
 首先设置key：Status bar is initially hidden    为YES
 
