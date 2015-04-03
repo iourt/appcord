@@ -13,6 +13,7 @@ var gulp 		 = require('gulp'),
 	minifycss    = require('gulp-minify-css'),
 	minifyHTML   = require('gulp-minify-html'),
 	replace      = require('gulp-replace'),
+	htmlreplace  = require('gulp-html-replace'),
 	concat       = require('gulp-concat'),
 	handlebars   = require('gulp-handlebars'),
 	connect 	 = require('gulp-connect'),
@@ -79,12 +80,18 @@ var task = {
 	moveHtml: function(){
 
 		gulp.src('source/**/*.html')
-			.pipe(replace(/\.css/g, '.css?v='+ version))
-			.pipe(replace(/Frame\.js/g, 'lib.frame.js?v='+ version))
-			.pipe(replace(/Config\.js/g, 'lib.config.js?v='+ version))
-			.pipe(replace(/App\.js/g, 'lib.common.js?v='+ version))
-			.pipe(minifyHTML({comments: true, spare: true}))
-			.pipe(gulp.dest(buildpath));
+			.pipe(htmlreplace({
+				'css': ['all.css?v='+ version],
+				'js': [
+					'/cordova.js?v='+ version,
+					'/cordova_plugins.js?v='+ version,
+					'/common/app.frame.js?v='+ version,
+					'js/common/prj.config.js?v='+ version,
+					'js/common/prj.router.js?v='+ version,
+					'/common/app.common.js?v='+ version
+				]
+			}))
+			.pipe(gulp.dest(buildPath));
 	},
 
 	/*
@@ -155,7 +162,7 @@ var task = {
 
 	/*
 	* router文件对应 和 requirejs.config 生成
-	* lib.config.js
+	* prj.config.js
 	* npm install --save-dev gulp-concat
 	*/
 	createConfig: function() {
@@ -168,8 +175,8 @@ var task = {
 					path +'/js/common/config.js'
 				])
 				.pipe(uglify({outSourceMap: false}))
-				.pipe(concat('lib.config.js'))
-				.pipe(gulp.dest(buildPath + name +'/js/'))
+				.pipe(concat('prj.config.js'))
+				.pipe(gulp.dest(buildPath + name +'/js/common/'))
 		});
 
 	},
@@ -179,21 +186,49 @@ var task = {
 	* lib.common.js
 	*/
 	createRouter: function() {
+		var prj = project();
+
+		prj.forEach(function(name) {
+		    rjs({
+		        baseUrl: sourcePath,
+		        out: name +'/js/common/prj.router.js',
+		        include: [
+		        	'router'
+		        ],
+			    paths: {
+			        'zepto':      'empty:',
+			        'underscore': 'empty:',
+			        'backbone':   'empty:',
+			        'handlebars': 'empty:',
+			        'require':    'empty:',
+			        'router':     name +'/js/common/router'
+				}
+		    })
+			.pipe(uglify({outSourceMap: false}))
+			.pipe(gulp.dest(buildPath));
+		});
+	},
+
+
+	/*
+	* common 定义 和 common 函数生成
+	* app.common.js
+	*/
+	createCommon: function() {
 		var strpath = {
 	        'zepto':      'empty:',
 	        'underscore': 'empty:',
 	        'backbone':   'empty:',
 	        'handlebars': 'empty:',
 	        'require':    'empty:',
-	        'router':     'home/js/common/router',
+	        'router':     'empty:',
 	        'appCommon':  'common/common'
 		};
 
 	    rjs({
 	        baseUrl: sourcePath,
-	        out: 'home/js/lib.common.js',
+	        out: 'common/app.common.js',
 	        include: [
-	        	'router', 
 	        	'appCommon'
 	        ],
 		    paths: strpath
@@ -236,8 +271,11 @@ var task = {
 gulp.task('default', function(){
 	// task.templates();
 	// task.sass();
-	// task.createFrame();
-	// task.connect('source');
-	task.createConfig();
+	// task.connect('build');
+	// task.createFrame('build');
+	// task.createConfig();
+	// task.createRouter();
+	// task.createCommon();
+	task.moveHtml();
 	console.log(project());
 });
