@@ -47,20 +47,20 @@ var task = {
 	*/
 	sass: function(type) {
 
-		// if (type == 'build') {
+		if (type == 'build') {
 
-		// 	gulp.src(sourcePath +'themes/*.scss')
-		// 		.pipe(sass())
-		// 		.pipe(minifycss())
-		// 		.pipe(gulp.dest(buildPath +'themes'));
+			gulp.src(sourcePath +'themes/*.scss')
+				.pipe(sass())
+				.pipe(minifycss())
+				.pipe(gulp.dest(buildPath +'themes'));
 
-		// } else {
+		} else {
 
 			gulp.src(sourcePath +'themes/*.scss')
 				.pipe(sass())
 				.pipe(gulp.dest(sourcePath +'themes'));
 
-		// }
+		}
 	},
 }
 
