@@ -36,7 +36,6 @@
         *         success: 成功回调函数
         *         error: 失败回调函数
         *     },
-        *     targetModel: slide|flip|drawer
         *     callback: function(){},
         *     failure: function(){}
         */
@@ -79,10 +78,37 @@
                     if (params.failure) {
                         params.failure();
                     } else {
-                        console.log('error!');
+                        console.log(msg);
                     }
                 }
             );
+        },
+
+        /*
+        * 抽屉效果
+        * @params:
+        * {
+        *     'origin': 'left', //--left|right', open the drawer from this side of the view, default 'left'
+        *     'action': 'open', //--'open|close', default 'open'
+        *     'duration': 300, //---in milliseconds (ms), default 400
+        *     'iosdelay': 50, //----ms to wait for the iOS webview to update before animation kicks in, default 60
+        *     'href': '' //---------url
+        * }
+        */
+        toMenu: function(params) {
+            var self = this;
+
+            var options = {
+                'origin': 'left',
+                'action': 'open',
+                'duration': 300,
+                'iosdelay': 50,
+                'href': ''
+            };
+
+            for (i in params) options[i] = params[i];
+
+            window.plugins.nativepagetransitions.drawer(options);
         },
 
         /*
