@@ -11,3 +11,5 @@ platforms/ios/www/
 platforms/ios/www/
 !platforms/ios/www/cordova.js
 !platforms/ios/www/cordova_plugins.js
+
+/node_modules/
