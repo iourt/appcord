@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        <link rel="stylesheet" type="text/css" href="style.css" />
+        <title>Hello World</title>
+        <script type="text/javascript" src="../cordova.js"></script>
+        <script type="text/javascript" src="../cordova_plugins.js"></script>
+        <script type="text/javascript" src="lib/zepto.min-1.1.6.js"></script>
+        <script type="text/javascript">
+            function scrollFix(elem) {
+                // Variables to track inputs
+                var startY, startTopScroll;
+
+                elem = (typeof elem == "object") ? elem : document.querySelector(elem);
+
+                // If there is no element, then do nothing    
+                if (!elem)
+                    return;
+
+                // Handle the start of interactions
+                elem.addEventListener('touchstart', function (event) {
+                    startY = event.touches[0].pageY;
+                    startTopScroll = elem.scrollTop;
+
+                    if (startTopScroll <= 0)
+                        elem.scrollTop = 1;
+
+                    if (startTopScroll + elem.offsetHeight >= elem.scrollHeight)
+                        elem.scrollTop = elem.scrollHeight - elem.offsetHeight - 1;
+
+                }, false);
+            }
+        </script>
+    </head>
+    <body>
+
+        <header>
+            <div></div>
+            <div>首页</div>
+            <div></div>
+        </header>
+
+        <section class="js_view mod">
+            <div class="js_images"></div>
+            <ul>
+                <li class="js_list">横滚切换页面效果演示</li>
+                <li class="js_menu">菜单隐藏效果演示</li>
+                <li class="js_camera">点击去拍照</li>
+                <li>cordova create script generates a skeletal web-based</li>
+                <li>cordova create script generates a skeletal web-based</li>
+                <li>cordova create script generates a skeletal web-based</li>
+                <li>cordova create script generates a skeletal web-based</li>
+                <li>cordova create script generates a skeletal web-based</li>
+                <li>cordova create script generates a skeletal web-based</li>
+                <li>cordova create script generates a skeletal web-based</li>
+                <li>cordova create script generates a skeletal web-based</li>
+                <li>cordova create script generates a skeletal web-based</li>
+                <li>cordova create script generates a skeletal web-based</li>
+                <li>cordova create script generates a skeletal web-based</li>
+                <li>cordova create script generates a skeletal web-based</li>
+                <li>cordova create script generates a skeletal web-based</li>
+                <li>cordova create script generates a skeletal web-based</li>
+                <li>cordova create script generates a skeletal web-based</li>
+                <li>cordova create script generates a skeletal web-based</li>
+                <li>cordova create script generates a skeletal web-based</li>
+                <li>cordova create script generates a skeletal web-based</li>
+                <li>cordova create script generates a skeletal web-based</li>
+                <li>cordova create script generates a skeletal web-based</li>
+                <li>cordova create script generates a skeletal web-based</li>
+                <li>cordova create script generates a skeletal web-based</li>
+                <li>cordova create script generates a skeletal web-based</li>
+                <li>cordova create script generates a skeletal web-based</li>
+                <li>cordova create script generates a skeletal web-based</li>
+                <li>cordova create script generates a skeletal web-based</li>
+                <li>cordova create script generates a skeletal web-based</li>
+                <li>cordova create script generates a skeletal web-based</li>
+                <li>cordova create script generates a skeletal web-based</li>
+                <li>cordova create script generates a skeletal web-based</li>
+                <li>cordova create script generates a skeletal web-based</li>
+                <li>cordova create script generates a skeletal web-based</li>
+            </ul>
+        </section>
+        <footer> 
+            <div>列表</div> 
+            <div>菜单</div> 
+            <div>拍照</div> 
+            <div>消息</div> 
+            <div>会员</div> 
+        </footer> 
+
+        <div class="loading"><div>loading...</div></div>
+
+        <script type="text/javascript"> 
+        scrollFix('.js_view');
+
+        var $camera = $('.js_camera'),
+            $that = $('.js_view'),
+            $loading = $('.loading'),
+            $back = $('.js_back'),
+            isClick = false;
+
+        var $html = '<li>越到后面越觉得phonegap制</li>'+
+            '<li>越到后面越觉得phonegap制</li><li>越到后面越觉得phonegap制</li><li>越到后面越觉得phonegap制</li>'+
+            '<li>越到后面越觉得phonegap制</li><li>越到后面越觉得phonegap制</li><li>越到后面越觉得phonegap制</li>'+
+            '<li>越到后面越觉得phonegap制</li><li>越到后面越觉得phonegap制</li><li>越到后面越觉得phonegap制</li>'+
+            '<li>越到后面越觉得phonegap制</li><li>越到后面越觉得phonegap制</li><li>越到后面越觉得phonegap制</li>'+
+            '<li>越到后面越觉得phonegap制</li><li>越到后面越觉得phonegap制</li><li>越到后面越觉得phonegap制</li>'+
+            '<li>越到后面越觉得phonegap制</li><li>越到后面越觉得phonegap制</li><li>越到后面越觉得phonegap制</li>'+
+            '<li>越到后面越觉得phonegap制</li><li>越到后面越觉得phonegap制</li><li>越到后面越觉得phonegap制</li>'+
+            '<li>越到后面越觉得phonegap制</li><li>越到后面越觉得phonegap制</li><li>越到后面越觉得phonegap制</li>'+
+            '<li>越到后面越觉得phonegap制</li><li>越到后面越觉得phonegap制</li><li>越到后面越觉得phonegap制</li>'+
+            '<li>越到后面越觉得phonegap制</li><li>越到后面越觉得phonegap制</li><li>越到后面越觉得phonegap制</li>'+
+            '<li>越到后面越觉得phonegap制</li><li>越到后面越觉得phonegap制</li><li>越到后面越觉得phonegap制</li>'+
+            '<li>越到后面越觉得phonegap制</li><li>越到后面越觉得phonegap制</li><li>越到后面越觉得phonegap制</li>'+
+            '<li>越到后面越觉得phonegap制</li><li>越到后面越觉得phonegap制</li><li>越到后面越觉得phonegap制</li>'+
+            '<li>越到后面越觉得phonegap制</li><li>越到后面越觉得phonegap制</li><li>越到后面越觉得phonegap制</li>'+
+            '<li>越到后面越觉得phonegap制</li><li>越到后面越觉得phonegap制</li><li>越到后面越觉得phonegap制</li>'+
+            '<li>越到后面越觉得phonegap制</li>';
+
+        var $start = '<li>phonegap不是银弹</li>'+
+            '<li>一些比如新闻展示，和硬件交互不高</li><li>越到后面越觉得phonegap制</li><li>phonegap不是银弹</li>'+
+            '<li>一些比如新闻展示，和硬件交互不高</li><li>越到后面越觉得phonegap制</li><li>phonegap不是银弹</li>'+
+            '<li>一些比如新闻展示，和硬件交互不高</li><li>越到后面越觉得phonegap制</li><li>phonegap不是银弹</li>'+
+            '<li>一些比如新闻展示，和硬件交互不高</li><li>越到后面越觉得phonegap制</li><li>phonegap不是银弹</li>'+
+            '<li>一些比如新闻展示，和硬件交互不高</li><li>越到后面越觉得phonegap制</li><li>phonegap不是银弹</li>'+
+            '<li>一些比如新闻展示，和硬件交互不高</li><li>越到后面越觉得phonegap制</li><li>phonegap不是银弹</li>'+
+            '<li>一些比如新闻展示，和硬件交互不高</li><li>越到后面越觉得phonegap制</li><li>phonegap不是银弹</li>'+
+            '<li>一些比如新闻展示，和硬件交互不高</li><li>越到后面越觉得phonegap制</li><li>phonegap不是银弹</li>'+
+            '<li>一些比如新闻展示，和硬件交互不高</li><li>越到后面越觉得phonegap制</li><li>phonegap不是银弹</li>'+
+            '<li>一些比如新闻展示，和硬件交互不高</li><li>越到后面越觉得phonegap制</li><li>phonegap不是银弹</li>'+
+            '<li>一些比如新闻展示，和硬件交互不高</li><li>越到后面越觉得phonegap制</li><li>phonegap不是银弹</li>'+
+            '<li>一些比如新闻展示，和硬件交互不高</li><li>越到后面越觉得phonegap制</li><li>phonegap不是银弹</li>'+
+            '<li>一些比如新闻展示，和硬件交互不高</li><li>越到后面越觉得phonegap制</li><li>phonegap不是银弹</li>'+
+            '<li>一些比如新闻展示，和硬件交互不高</li><li>越到后面越觉得phonegap制</li><li>phonegap不是银弹</li>'+
+            '<li>一些比如新闻展示，和硬件交互不高</li><li>越到后面越觉得phonegap制</li><li>phonegap不是银弹</li>'+
+            '<li>一些比如新闻展示，和硬件交互不高</li><li>越到后面越觉得phonegap制</li><li>phonegap不是银弹</li>'+
+            '<li>一些比如新闻展示，和硬件交互不高</li><li>越到后面越觉得phonegap制</li><li>phonegap不是银弹</li>'+
+            '<li>一些比如新闻展示，和硬件交互不高</li><li>越到后面越觉得phonegap制</li><li>phonegap不是银弹</li>'+
+            '<li>越到后面越觉得phonegap制</li>';
+
+        var options = {
+            // "direction"        : "left", // 'left|right|up|down', default 'left' (which is like 'next')
+            "duration"         :  500, // in milliseconds (ms), default 400
+            "slowdownfactor"   :    3, // overlap views (higher number is more) or no overlap (1), default 4
+            "iosdelay"         :  100, // ms to wait for the iOS webview to update before animation kicks in, default 60
+            "androiddelay"     :  150, // same as above but for Android, default 70
+            "winphonedelay"    :  250, // same as above but for Windows Phone, default 200,
+            "fixedPixelsTop"   :    0, // the number of pixels of your fixed header, default 0 (iOS and Android)
+            "fixedPixelsBottom":   48  // the number of pixels of your fixed footer (f.i. a tab bar), default 0 (iOS and Android)
+        };
+
+        $back.on('click', function(){
+            $that.html("");
+            
+            $loading.css('display', 'block');
+
+            options.direction = 'right';
+
+            window.plugins.nativepagetransitions.slide(
+                options,
+                function (msg) {
+                    onComplete();
+                },
+                function (msg) {
+                    alert("error: " + msg)
+                }
+            );
+        });
+
+        $that.on('click', function (){
+            // var options = {
+            //   "origin"         : "left", // 'left|right', open the drawer from this side of the view, default 'left'
+            //   "action"         : "open", // 'open|close', default 'open'
+            //   "duration"       :    300, // in milliseconds (ms), default 400
+            //   "iosdelay"       :     50,
+            //   "href": "/home/list.html",
+            //   "fixedPixelsBottom":   48 
+            // };
+
+        });
+
+        $('.js_list').on('click', function(){
+            toJump({
+                opts: {
+                    'direction': 'left',
+                    'href': '/home/list.html'
+                },
+                callback: function(){
+                    alert(2);
+                }
+            });
+        })
+
+        $('.js_menu').on('click', function(){
+            window.plugins.nativepagetransitions.drawer({
+                "origin": "left",
+                "action": "open",
+                "duration": 300,
+                "iosdelay": 50,
+                "href": "/home/menu.html"
+            });
+        })
+
+        function onComplete(){
+            if (isClick) {
+                $that.html($start);
+            } else {
+                $that.html($html);
+            }
+            isClick = !isClick;
+            $loading.css('display', 'none');
+        }
+
+        $camera.on('click', function(){
+            navigator.camera.getPicture(onSuccess, onFail, 
+                {
+                    quality: 100,
+                    destinationType: Camera.DestinationType.DATA_URL
+                }
+            );
+        });
+
+        function onSuccess(imageURI) {
+            var $images = $('.js_images');
+            $images.html('<img src="'+ imageURI +'" />');
+        }
+
+        function onFail(message) {
+            alert('Failed because: ' + message);
+        }
+
+
+        function toJump(params) {
+
+            var options = {
+                    'direction': 'left',
+                    'duration': 500, 
+                    'slowdownfactor': 3,
+                    'iosdelay': 100,
+                    'androiddelay': 150,
+                    'winphonedelay': 250, 
+                    'fixedPixelsTop': 0,
+                    'fixedPixelsBottom': 48
+                },
+                callback = params.callback ? params.callback : '';
+
+            if (params.opts) {
+                if (params.opts.href) {
+                    options.href = params.opts.href;
+                } else {
+                    $('.loading').css('display', 'block');
+                }
+                for (i in params.opts) options[i] = params.opts[i];
+            }
+            
+            window.plugins.nativepagetransitions.slide(
+                options,
+                function (msg) {
+                    callback();
+                },
+                function (msg) {
+                    if (params.failure) {
+                        params.failure();
+                    } else {
+                        console.log('error!');
+                    }
+                }
+            );
+        }
+        </script>
+    </body>
+</html>

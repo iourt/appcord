@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        <link rel="stylesheet" type="text/css" href="style.css" />
+        <title>Hello World</title>
+        <script type="text/javascript" src="../cordova.js"></script>
+        <script type="text/javascript" src="../cordova_plugins.js"></script>
+        <script type="text/javascript" src="lib/zepto.min-1.1.6.js"></script>
+        <script type="text/javascript">
+            function scrollFix(elem) {
+                // Variables to track inputs
+                var startY, startTopScroll;
+
+                elem = (typeof elem == "object") ? elem : document.querySelector(elem);
+
+                // If there is no element, then do nothing    
+                if (!elem)
+                    return;
+
+                // Handle the start of interactions
+                elem.addEventListener('touchstart', function (event) {
+                    startY = event.touches[0].pageY;
+                    startTopScroll = elem.scrollTop;
+
+                    if (startTopScroll <= 0)
+                        elem.scrollTop = 1;
+
+                    if (startTopScroll + elem.offsetHeight >= elem.scrollHeight)
+                        elem.scrollTop = elem.scrollHeight - elem.offsetHeight - 1;
+
+                }, false);
+            }
+        </script>
+    </head>
+    <body>
+        <header>
+            <div class="js_back"><</div>
+            <div>这是列表啊</div>
+            <div></div>
+        </header>
+
+        <section class="js_view mod">
+        <ul>
+            <li>一些比如新闻展示，和硬件交互不高</li>
+            <li>越到后面越觉得phonegap制</li>
+            <li>一些比如新闻展示，和硬件交互不高</li>
+            <li>越到后面越觉得phonegap制</li>
+            <li>phonegap不是银弹</li>
+            <li>一些比如新闻展示，和硬件交互不高</li>
+            <li>越到后面越觉得phonegap制</li>
+            <li>phonegap不是银弹</li>
+            <li>一些比如新闻展示，和硬件交互不高</li>
+            <li>越到后面越觉得phonegap制</li>
+            <li>一些比如新闻展示，和硬件交互不高</li>
+            <li>越到后面越觉得phonegap制</li>
+            <li>phonegap不是银弹</li>
+            <li>一些比如新闻展示，和硬件交互不高</li>
+            <li>越到后面越觉得phonegap制</li>
+            <li>phonegap不是银弹</li>
+            <li>一些比如新闻展示，和硬件交互不高</li>
+            <li>越到后面越觉得phonegap制</li>
+            <li>phonegap不是银弹</li>
+            <li>一些比如新闻展示，和硬件交互不高</li>
+            <li>越到后面越觉得phonegap制</li>
+            <li>phonegap不是银弹</li>
+            <li>一些比如新闻展示，和硬件交互不高</li>
+            <li>越到后面越觉得phonegap制</li>
+            <li>phonegap不是银弹</li>
+            <li>一些比如新闻展示，和硬件交互不高</li>
+            <li>越到后面越觉得phonegap制</li>
+        </ul>
+        </section>
+
+        <footer>
+            <div>首页</div>
+            <div>发现</div>
+            <div>拍照1</div>
+            <div>消息</div>
+            <div>会员</div>
+        </footer>
+
+        <div class="loading"><div>loading...</div></div>
+        
+        <script type="text/javascript">
+        scrollFix('.js_view');
+
+        var $that = $('.js_view'),
+            $loading = $('.loading'),
+            $back = $('.js_back');
+
+        $back.on('click', function(){
+            window.plugins.nativepagetransitions.slide({
+                "direction"        : "right",
+                "duration"         :  500,
+                "slowdownfactor"   :    3,
+                "iosdelay"         :  100,
+                "androiddelay"     :  150,
+                "winphonedelay"    :  250,
+                "fixedPixelsTop"   :    0,
+                "fixedPixelsBottom":   48,
+                "href" : "/home/index.html"
+            });
+        });
+        </script>
+    </body>
+</html>
