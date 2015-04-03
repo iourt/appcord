@@ -265,7 +265,48 @@ var task = {
         gulp.src('')
             .pipe(shell(url));
             
-    }
+    },
+
+    /*
+    * 压缩JS
+    */
+	minrjs: function() {
+		var strpath = {
+	        'zepto':      'empty:',
+	        'underscore': 'empty:',
+	        'backbone':   'empty:',
+	        'handlebars': 'empty:',
+	        'require':    'empty:',
+	        'router':     'empty:',
+	        'appCommon':  'empty:'
+		};
+
+		// var files = [
+		// 	'Page/List',
+		// 	'Page/Add',
+		// 	'Page/Comment',
+		// 	'Page/Detail',
+		// 	'Page/Login'
+		// ];
+
+		var prj = project(),
+			files = pagename();
+
+		console.log(files);
+
+		// prj.forEach(function(v){
+		// 	files.forEach(function(name) {
+		// 	    rjs({
+		// 	        baseUrl: './source/js',
+		// 	        out: name + '.js',
+		// 	        include: [name],
+		// 		    paths: strpath
+		// 	    })
+		// 		.pipe(uglify({outSourceMap: false}))
+		// 		.pipe(gulp.dest(buildPath + 'js'));
+		// 	});
+		// });
+	}
 }
 
 gulp.task('default', function(){
@@ -276,6 +317,7 @@ gulp.task('default', function(){
 	// task.createConfig();
 	// task.createRouter();
 	// task.createCommon();
-	task.moveHtml();
+	// task.moveHtml();
+	task.minrjs();
 	console.log(project());
 });

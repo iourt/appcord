@@ -1,22 +1,46 @@
-var fs = require('fs');
+var fs      = require('fs'),
+    project = require('../tools/project.js');
 
 function getAllFiles () {
-	var root = './source/js/Page',
-		result = [],
-		files = fs.readdirSync(root);
+    var prj = project(),
+        result = {};
 
-	files.forEach(function(file){
-		var pathname = root + '/' + file,
-			stat = fs.lstatSync(pathname);
+    prj.forEach(function(v){
+        result[v] = [];
 
-		if (stat === undefined) return;
+        var path = './source/'+ v +'/js/page',
+            files = fs.readdirSync(path);
 
-    	if (!stat.isDirectory() && /\.js/.test(file)) {
-    		var name = 'Page/' + file.replace('\.js', '');
+        files.forEach(function(file){
+            var pathname = path + '/' + file,
+                stat = fs.lstatSync(pathname);
 
-      		result.push(name);
-      	}
-	});
+            if (stat === undefined) return;
+
+            if (!stat.isDirectory() && /\.js/.test(file)) {
+                var name = file.replace('\.js', '');
+
+                result[v].push(name);
+            }
+        });
+    });
+
+	// var root = './source/js/Page',
+	// 	result = [],
+	// 	files = fs.readdirSync(root);
+
+	// files.forEach(function(file){
+	// 	var pathname = root + '/' + file,
+	// 		stat = fs.lstatSync(pathname);
+
+	// 	if (stat === undefined) return;
+
+ //    	if (!stat.isDirectory() && /\.js/.test(file)) {
+ //    		var name = 'Page/' + file.replace('\.js', '');
+
+ //      		result.push(name);
+ //      	}
+	// });
 
 	return result;
 }
