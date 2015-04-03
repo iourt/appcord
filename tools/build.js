@@ -12,4 +12,4 @@ var dir = function() {
     return dir;
 };
 
-exports.dir = dir; 
+module.exports = dir; 
