@@ -1,65 +1,88 @@
 ﻿define([
-    'gsAppAgent'
+    'appCommon'
 ], function (
-    appAgent
+    appCommon
 ) {
 
-    var isHybrid = appAgent.
-    
     var routerRedirect = {
         /*
-        * 点返回按钮（http://conf.ctripcorp.com/display/Wireless/c.widget.guider）
-        * @params
-        *     url: 指定页面返回到具体的URL【只对H5有用】
-        *     param: APP 返回上一页 带回参数
+        * 页面返回
         */
         toBack: function (params) {
             var self = this;
 
-            var url = params && params.url ? params.url : '',
-                opts = params && params.param ? params.param : '';
+            params.opts.direction = 'right';
 
-            if (self.isHybrid) {
-
-                if (typeof (opts) == "object") {
-                    self.Guider.backToLastPage({ param: JSON.stringify(opts) });
-                } else {
-                    self.Guider.backToLastPage({ param: opts });
-                }
-
-            } else {
-
-                var from = Lizard.P('from');
-
-                if (from) {
-
-                    window.location.href = from;
-
-                } else {
-
-                    if (url) {
-                        window.location.href = url;
-                    } else {
-                        window.history.back();
-                    }
-
-                }
-
-            }
-
+            self._slide(params);
         },
 
-        // 返回首页
-        toHome: function () {
+        /*
+        * 页面跳转
+        * var options = {
+        *     "direction": "left", //-----'left|right|up|down', default 'left' (which is like 'next')
+        *     "duration": 500, //---------in milliseconds (ms), default 400
+        *     "slowdownfactor": 3, //-----overlap views (higher number is more) or no overlap (1), default 4
+        *     "iosdelay": 100, //---------ms to wait for the iOS webview to update before animation kicks in, default 60
+        *     "androiddelay": 150, //-----same as above but for Android, default 70
+        *     "winphonedelay": 250, //----same as above but for Windows Phone, default 200,
+        *     "fixedPixelsTop": 0, //-----the number of pixels of your fixed header, default 0 (iOS and Android)
+        *     "fixedPixelsBottom": 48 //--the number of pixels of your fixed footer (f.i. a tab bar), default 0 (iOS and Android)
+        *     'href': '' //---------------跳转的地址
+        * };
+        * @params:
+        *     opts: {
+        *         direction: 页面转动方向[left|right|up|down]
+        *         href: 页面跳转的URL
+        *         success: 成功回调函数
+        *         error: 失败回调函数
+        *     },
+        *     targetModel: slide|flip|drawer
+        *     callback: function(){},
+        *     failure: function(){}
+        */
+        toJump: function (params) {
             var self = this;
 
-            if (self.isHybrid) {
-                Guider.home();
-            } else {
-                this.toJump({
-                    url: ['http://m.ctrip.com']
-                });
+            self._slide(params);
+        },
+
+        _slide: function(params){
+            var self = this;
+
+            var options = {
+                    'direction': 'left',
+                    'duration': 500, 
+                    'slowdownfactor': 3, 
+                    'iosdelay': 100,
+                    'androiddelay': 150,
+                    'winphonedelay': 250, 
+                    'fixedPixelsTop': 0,
+                    'fixedPixelsBottom': 48
+                },
+                callback = params.callback ? params.callback : '';
+
+            if (params.opts) {
+                if (params.opts.href) {
+                    options.href = params.opts.href;
+                } else {
+                    appCommon.loading.show();
+                }
+                for (i in params.opts) options[i] = params.opts[i];
             }
+            
+            window.plugins.nativepagetransitions.slide(
+                options,
+                function (msg) {
+                    callback();
+                },
+                function (msg) {
+                    if (params.failure) {
+                        params.failure();
+                    } else {
+                        console.log('error!');
+                    }
+                }
+            );
         },
 
         /*
@@ -84,24 +107,6 @@
             }
 
             return $that;
-        },
-
-        /*
-        * 页面跳转
-        * @params
-        *     host: 是否启用m.ctrip.com访问页面，启用填true，默认不启用
-        *     url: 数组【第一个值是H5 URL，第二个值APP URL，如果两个都一样就填一个, URL传空点击就是刷新当前页】
-        *     targetModel: 
-        *          1: 处理ctrip://协议
-        *          2: 开启新的H5页面
-        *          3: 使用系统浏览器打开
-        *          4: 开启本地新的H5页面，此时URL为相对路径；5.6版本加入
-        */
-        toJump: function (params) {
-            var self = this;
-
-            var url = params && params.url ? params.url : '',
-                targetModel = params && params.targetModel ? params.targetModel : '4';
         }
     };
 
