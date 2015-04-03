@@ -7,8 +7,8 @@ requirejs.config({
         'handlebars': 'empty:',
         'require':    'empty:',
 
-        'router':     'Common/Router',
-        'Common':     'common/common'
+        'router':     'common/router',
+        'appCommon':  '../../common/common'
     },
     urlArgs: createMinFileVersion ? 'v='+ createMinFileVersion : '',
     shim: {

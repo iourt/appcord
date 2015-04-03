@@ -13,8 +13,10 @@ var gulp 		 = require('gulp'),
 	minifyHTML   = require('gulp-minify-html'),
 	replace      = require('gulp-replace'),
 	handlebars   = require('gulp-handlebars'),
+	connect 	 = require('gulp-connect'),
 	rjs          = require('gulp-requirejs'),
 	uglify       = require('gulp-uglify'),
+	shell        = require('gulp-shell'),
 	defineModule = require('gulp-define-module');
 
 var dev = argv.dev,
@@ -147,10 +149,71 @@ var task = {
 		.pipe(uglify({outSourceMap: false}))
 		.pipe(replace(/createMinFileVersion=0/g, 'createMinFileVersion='+ isBuild))
 		.pipe(gulp.dest(filePath)); // pipe it to the output DIR 
-	}
+	},
+
+
+	/*
+	* router 定义 和 common 函数生成
+	* lib.common.js
+	*/
+	createRouter: function() {
+		var strpath = {
+	        'zepto':      'empty:',
+	        'underscore': 'empty:',
+	        'backbone':   'empty:',
+	        'handlebars': 'empty:',
+	        'require':    'empty:',
+	        'router':     'home/js/common/router',
+	        'appCommon':  'common/common'
+		};
+
+	    rjs({
+	        baseUrl: sourcePath,
+	        out: 'home/js/lib.common.js',
+	        include: [
+	        	'router', 
+	        	'appCommon'
+	        ],
+		    paths: strpath
+	    })
+		.pipe(uglify({outSourceMap: false}))
+		.pipe(gulp.dest(buildPath));
+	},
+
+	/*
+	* 开启服务
+	* npm install --save-dev gulp-connect
+	* npm install --save-dev gulp-shell
+	*/
+	connect: function(type) {
+
+        var version = os.platform(),
+        	url = '';
+
+        connect.server({
+            root: type,
+            port: "9999",
+            livereload: true
+        });
+
+        switch (version) {
+            case 'win32':
+                url = 'start http://localhost:9999';
+                break;
+            case 'darwin':
+                url = 'open http://localhost:9999';
+                break;
+        }
+
+        gulp.src('')
+            .pipe(shell(url));
+            
+    }
 }
 
 gulp.task('default', function(){
-	// task.templates();
+	task.templates();
+	task.sass();
 	task.createFrame();
+	task.connect('source');
 });
