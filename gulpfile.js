@@ -1,9 +1,11 @@
+var projectType = require('./tools/projectType.js');
+
 var fs           = require('fs'),
 	argv         = require('yargs').argv,
 	os           = require('os'),
 	build        = require('./tools/build.js'),
-	movefiles    = require('./tools/move-files.js'),
-	pagename  = require('./tools/page-files.js'),
+	movefiles    = require('./tools/moveFiles.js'),
+	pagename     = require('./tools/pageFiles.js'),
 
 	gulp 		 = require('gulp'),
 	shell        = require('gulp-shell'),
@@ -23,14 +25,12 @@ var fs           = require('fs'),
 	defineModule = require('gulp-define-module');
 
 var dev = argv.dev,
-	buildpath = './build/';
+	buildPath = build.dir().toString();
 
 var d = new Date(),
     version = d.getTime();
 
-if (dev == 'cp') {
-	buildpath = build.dir().toString();
-}
+ console.log(buildPath);
 
 var task = {
 	concat: function() {
@@ -93,7 +93,7 @@ var task = {
 		gulp.src('source/**/*.html')
 			.pipe(replace(/\.css/g, '.css?v='+version))
 			.pipe(replace(/\.js/g, '.js?v='+version))
-			.pipe(gulp.dest(buildpath));
+			.pipe(gulp.dest(buildPath));
 
 		gulp.src([
 				'source/**/*.js',
@@ -107,17 +107,17 @@ var task = {
 				'!source/js/Model/*.js'
 			])
 			.pipe(uglify({outSourceMap: false}))
-			.pipe(gulp.dest(buildpath));
+			.pipe(gulp.dest(buildPath));
 
 		gulp.src('source/**/*.css')
 			.pipe(minifycss())
-			.pipe(gulp.dest(buildpath));
+			.pipe(gulp.dest(buildPath));
 		
 		gulp.src([
 				'source/**/*.jpg',
 				'source/**/*.png'
 			])
-			.pipe(gulp.dest(buildpath));
+			.pipe(gulp.dest(buildPath));
 	},
 
 	templates: function() {
@@ -137,7 +137,7 @@ var task = {
 
 		if (type == 'build') {
 
-			filePath = buildpath;
+			filePath = buildPath;
 			gulp.src('./source/themes/all.scss')
 				.pipe(sass())
 				.pipe(minifycss())
@@ -163,7 +163,7 @@ var task = {
 			isBuild = 0;
 
 		if (type == 'build') {
-			filePath = buildpath;
+			filePath = buildPath;
 			isBuild = version;
 			fileName = 'js/lib.frame.js';
 		}
@@ -228,7 +228,7 @@ var task = {
 			])
 			.pipe(uglify({outSourceMap: false}))
 			.pipe(concat('lib.config.js'))
-			.pipe(gulp.dest(buildpath + 'js/'))
+			.pipe(gulp.dest(buildPath + 'js/'))
 	},
 
 	/*
@@ -257,7 +257,7 @@ var task = {
 		    paths: strpath
 	    })
 		.pipe(uglify({outSourceMap: false}))
-		.pipe(gulp.dest(buildpath));
+		.pipe(gulp.dest(buildPath));
 	},
 
 	minrjs: function() {
@@ -290,7 +290,7 @@ var task = {
 			    paths: strpath
 		    })
 			.pipe(uglify({outSourceMap: false}))
-			.pipe(gulp.dest(buildpath + 'js'));
+			.pipe(gulp.dest(buildPath + 'js'));
 		});
 	},
 
@@ -304,14 +304,14 @@ var task = {
 			.pipe(replace(/Config\.js/g, 'lib.config.js?v='+ version))
 			.pipe(replace(/App\.js/g, 'lib.common.js?v='+ version))
 			.pipe(minifyHTML(opts))
-			.pipe(gulp.dest(buildpath));
+			.pipe(gulp.dest(buildPath));
 		
 		// 移动图片文件
 		gulp.src([
 				'source/**/*.jpg',
 				'source/**/*.png'
 			])
-			.pipe(gulp.dest(buildpath));
+			.pipe(gulp.dest(buildPath));
 
 	},
 
