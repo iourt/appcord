@@ -2,7 +2,7 @@ var fs = require('fs');
 
 var dir = function() {
     var file = './tools/.build',
-        dir = './www/',
+        dir = './build/',
         exists = fs.existsSync(file);
 
     if (exists) {

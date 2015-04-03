@@ -4,6 +4,7 @@ var fs   = require('fs'),
 
 var projectType = require('./tools/projectType.js'),
 	build       = require('./tools/build.js'),
+	project     = require('./tools/project.js'),
 	movefiles   = require('./tools/moveFiles.js'),
 	pagename    = require('./tools/pageFiles.js');
 
@@ -12,6 +13,7 @@ var gulp 		 = require('gulp'),
 	minifycss    = require('gulp-minify-css'),
 	minifyHTML   = require('gulp-minify-html'),
 	replace      = require('gulp-replace'),
+	concat       = require('gulp-concat'),
 	handlebars   = require('gulp-handlebars'),
 	connect 	 = require('gulp-connect'),
 	rjs          = require('gulp-requirejs'),
@@ -151,9 +153,29 @@ var task = {
 		.pipe(gulp.dest(filePath)); // pipe it to the output DIR 
 	},
 
+	/*
+	* router文件对应 和 requirejs.config 生成
+	* lib.config.js
+	* npm install --save-dev gulp-concat
+	*/
+	createConfig: function() {
+		var prj = project();
+
+		prj.forEach(function(name) {
+			var path = sourcePath + name;
+			gulp.src([
+					path +'/js/app.js',
+					path +'/js/common/config.js'
+				])
+				.pipe(uglify({outSourceMap: false}))
+				.pipe(concat('lib.config.js'))
+				.pipe(gulp.dest(buildPath + name +'/js/'))
+		});
+
+	},
 
 	/*
-	* router 定义 和 common 函数生成
+	* router 定义 和 common 函数生成 各项目
 	* lib.common.js
 	*/
 	createRouter: function() {
@@ -212,8 +234,10 @@ var task = {
 }
 
 gulp.task('default', function(){
-	task.templates();
-	task.sass();
-	task.createFrame();
-	task.connect('source');
+	// task.templates();
+	// task.sass();
+	// task.createFrame();
+	// task.connect('source');
+	task.createConfig();
+	console.log(project());
 });
