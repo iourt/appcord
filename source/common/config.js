@@ -8,7 +8,7 @@ requirejs.config({
         'require':    'empty:',
 
         'router':     'Common/Router',
-        'Common':     'Common/Common'
+        'Common':     'common/common'
     },
     urlArgs: createMinFileVersion ? 'v='+ createMinFileVersion : '',
     shim: {
