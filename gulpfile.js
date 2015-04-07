@@ -191,10 +191,10 @@ var task = {
 		prj.forEach(function(name) {
 			var path = sourcePath + name;
 			gulp.src([
-					path +'/js/app.js',
-					path +'/js/common/config.js'
+					path +'/js/common/config.js',
+					path +'/js/app.js'
 				])
-				.pipe(uglify({outSourceMap: false}))
+				// .pipe(uglify({outSourceMap: false}))
 				.pipe(concat('prj.config.js'))
 				.pipe(gulp.dest(buildPath + name +'/js/common/'))
 		});
@@ -265,10 +265,15 @@ var task = {
 	connect: function(type) {
 
         var version = os.platform(),
+        	path = sourcePath,
         	url = '';
 
+        if (type == 'build') {
+        	path = buildPath;
+        }
+
         connect.server({
-            root: type,
+            root: path,
             port: "9999",
             livereload: true
         });
@@ -298,7 +303,8 @@ var task = {
 	        'handlebars': 'empty:',
 	        'require':    'empty:',
 	        'router':     'empty:',
-	        'appCommon':  'empty:'
+	        'appCommon':  'empty:',
+	        'cPath': '../../common'
 		};
 
 		var prj = project(),
@@ -323,17 +329,17 @@ gulp.task('default', function(){
 	task.templates();
 	task.sass('source');
 	task.createFrame('source');
-	task.connect('source');
+	// task.connect('source');
 });
 
 gulp.task('build', function(){
 	// task.templates();
-	// task.sass('build');
-	// task.createFrame('build');
-	// task.createConfig();
-	// task.createRouter();
-	// task.createCommon();
+	task.sass('build');
+	task.createFrame('build');
+	task.createConfig();
+	task.createRouter();
+	task.createCommon();
 	task.moveHtml();
-	// task.minrjs();
-	// task.connect('build');
+	task.minrjs();
+	task.connect('build');
 });

@@ -1,9 +1,11 @@
 define([
     'appCommon',
-	'view/viewIndex'
+	'view/viewIndex',
+    'cPath/routerRedirect'
 ], function(
     Common,
-	PageView
+	PageView,
+    routerRedirect
 ){
 
 	var ShowView = {
