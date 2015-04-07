@@ -2,11 +2,10 @@ var fs   = require('fs'),
 	argv = require('yargs').argv,
 	os   = require('os');
 
-var projectType = require('./tools/projectType.js'),
-	build       = require('./tools/build.js'),
-	project     = require('./tools/project.js'),
-	movefiles   = require('./tools/moveFiles.js'),
-	pagename    = require('./tools/pageFiles.js');
+var build     = require('./tools/build.js'),
+	project   = require('./tools/getProject.js'),
+	movefiles = require('./tools/moveFiles.js'),
+	pagename  = require('./tools/getPageName.js');
 
 var gulp 		 = require('gulp'),
 	sass         = require('gulp-sass'),
@@ -31,7 +30,6 @@ var d = new Date(),
 
 
 var task = {
-
 	/*
 	* 生成handlebars模板
 	* npm install --save-dev gulp-handlebars

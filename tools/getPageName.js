@@ -1,5 +1,5 @@
 var fs      = require('fs'),
-    project = require('../tools/project.js');
+    project = require('../tools/getProject.js');
 
 function getAllFiles () {
     var prj = project(),
