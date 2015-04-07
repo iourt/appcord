@@ -304,7 +304,7 @@ var task = {
 	        'require':    'empty:',
 	        'router':     'empty:',
 	        'appCommon':  'empty:',
-	        'cPath': '../../common'
+	        'cPath':      '../../common'
 		};
 
 		var prj = project(),
