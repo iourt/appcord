@@ -76,20 +76,42 @@ var task = {
 	* npm install --save-dev gulp-replace
 	*/
 	moveHtml: function(){
+		var prj = project();
 
-		gulp.src('source/**/*.html')
-			.pipe(htmlreplace({
-				'css': ['all.css?v='+ version],
-				'js': [
-					'/cordova.js?v='+ version,
-					'/cordova_plugins.js?v='+ version,
-					'/common/app.frame.js?v='+ version,
-					'js/common/prj.config.js?v='+ version,
-					'js/common/prj.router.js?v='+ version,
-					'/common/app.common.js?v='+ version
-				]
-			}))
-			.pipe(gulp.dest(buildPath));
+		prj.forEach(function(name){
+			gulp.src(sourcePath + name + '/*.html')
+				.pipe(
+					htmlreplace({
+						'css': [
+							'/themes/all.css?v='+ version,
+							'/themes/'+ name +'.css?v='+ version,
+						],
+						'js': [
+							'/cordova.js?v='+ version,
+							'/cordova_plugins.js?v='+ version,
+							'/common/app.frame.js?v='+ version,
+							'js/common/prj.config.js?v='+ version,
+							'js/common/prj.router.js?v='+ version,
+							'/common/app.common.js?v='+ version
+						]
+					})
+				)
+				.pipe(gulp.dest(buildPath + name));
+		});
+
+		// gulp.src('source/**/*.html')
+		// 	.pipe(htmlreplace({
+		// 		'css': ['all.css?v='+ version],
+		// 		'js': [
+		// 			'/cordova.js?v='+ version,
+		// 			'/cordova_plugins.js?v='+ version,
+		// 			'/common/app.frame.js?v='+ version,
+		// 			'js/common/prj.config.js?v='+ version,
+		// 			'js/common/prj.router.js?v='+ version,
+		// 			'/common/app.common.js?v='+ version
+		// 		]
+		// 	}))
+		// 	.pipe(gulp.dest(buildPath));
 	},
 
 	/*
@@ -279,43 +301,39 @@ var task = {
 	        'appCommon':  'empty:'
 		};
 
-		// var files = [
-		// 	'Page/List',
-		// 	'Page/Add',
-		// 	'Page/Comment',
-		// 	'Page/Detail',
-		// 	'Page/Login'
-		// ];
-
 		var prj = project(),
 			files = pagename();
 
-		console.log(files);
-
-		// prj.forEach(function(v){
-		// 	files.forEach(function(name) {
-		// 	    rjs({
-		// 	        baseUrl: './source/js',
-		// 	        out: name + '.js',
-		// 	        include: [name],
-		// 		    paths: strpath
-		// 	    })
-		// 		.pipe(uglify({outSourceMap: false}))
-		// 		.pipe(gulp.dest(buildPath + 'js'));
-		// 	});
-		// });
+		prj.forEach(function(v){
+			files[v].forEach(function(name) {
+				rjs({
+					baseUrl: sourcePath + v +'/js',
+					out: 'page/'+ name +'.js',
+					include: [ 'page/'+ name],
+					paths: strpath
+				})
+				.pipe(uglify({outSourceMap: false}))
+				.pipe(gulp.dest(buildPath + v +'/js'));
+			});
+		});
 	}
 }
 
 gulp.task('default', function(){
+	task.templates();
+	task.sass('source');
+	task.createFrame('source');
+	task.connect('source');
+});
+
+gulp.task('build', function(){
 	// task.templates();
-	// task.sass();
-	// task.connect('build');
+	// task.sass('build');
 	// task.createFrame('build');
 	// task.createConfig();
 	// task.createRouter();
 	// task.createCommon();
-	// task.moveHtml();
-	task.minrjs();
-	console.log(project());
+	task.moveHtml();
+	// task.minrjs();
+	// task.connect('build');
 });
