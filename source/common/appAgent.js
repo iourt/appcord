@@ -14,7 +14,7 @@
         // 是APP环境
         isHybrid: function() {
 
-            var type = /ctripwireless/.test(this.ua);
+            var type = /appuewireless/.test(this.ua);
             return type;
 
         },

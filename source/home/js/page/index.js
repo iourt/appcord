@@ -16,6 +16,10 @@ define([
             var pageView = new PageView();
         
             $(".js_view").html(pageView.render().el);
+
+            var ua = navigator.userAgent.toLowerCase();
+
+            alert(ua);
         }
 		
 	};

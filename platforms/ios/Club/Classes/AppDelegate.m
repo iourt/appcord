@@ -84,6 +84,8 @@
 
     // NOTE: To customize the view's frame size (which defaults to full screen), override
     // [self.viewController viewWillAppear:] in your view controller.
+    
+    self.viewController.baseUserAgent = @"UserAgent AppUeWirelessIOS";
 
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
