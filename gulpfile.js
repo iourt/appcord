@@ -1,7 +1,6 @@
 var fs   = require('fs'),
 	argv = require('yargs').argv,
-	os   = require('os'),
-	util = require('util');
+	os   = require('os');
 
 var build     = require('./tools/build.js'),
 	project   = require('./tools/getProject.js'),

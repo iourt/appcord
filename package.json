@@ -32,5 +32,8 @@
     "gulp-uglify": "",
     "gulp-connect": "",
     "gulp-html-replace": ""
+  },
+  "devDependencies": {
+    "gulp-connect": "^2.2.0"
   }
 }
