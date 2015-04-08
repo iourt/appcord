@@ -286,27 +286,27 @@ var task = {
 			cName = pagename(2),
 			dName = JSON.parse(JSON.stringify(pagename(3)));
 
-		// cName.forEach(function(name){
+		cName.forEach(function(name){
 
-		// 	var tmpPath = self._getCommonName(),
-		// 		tmpName = name;
+			var tmpPath = self._getCommonName(),
+				tmpName = name;
 			
-		// 	tmpName = tmpName.replace(/^./, tmpName.charAt(0).toUpperCase());
+			tmpName = tmpName.replace(/^./, tmpName.charAt(0).toUpperCase());
 
-		// 	tmpPath['app'+ tmpName] = 'common/'+ name;
+			tmpPath['app'+ tmpName] = 'common/'+ name;
 
-		// 	rjs({
-		// 		baseUrl: sourcePath,
-		// 		out: 'common/app.'+ name +'.js',
-		// 		include: [
-		// 			'app'+ tmpName
-		// 		],
-		// 		paths: tmpPath
-		// 	})
-		// 	.pipe(uglify({outSourceMap: false}))
-		// 	.pipe(gulp.dest(buildPath));
+			rjs({
+				baseUrl: sourcePath,
+				out: 'common/app.'+ name +'.js',
+				include: [
+					'app'+ tmpName
+				],
+				paths: tmpPath
+			})
+			.pipe(uglify({outSourceMap: false}))
+			.pipe(gulp.dest(buildPath));
 
-		// });
+		});
 
 		prj.forEach(function(v){
 
@@ -329,7 +329,7 @@ var task = {
 					],
 					paths: tmpPath
 				})
-				// .pipe(uglify({outSourceMap: false}))
+				.pipe(uglify({outSourceMap: false}))
 				.pipe(gulp.dest(buildPath + v));
 			});
 
