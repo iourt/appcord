@@ -1,13 +1,13 @@
 define([
-    'appCommon',
-	'view/viewIndex',
-    'appAppAgent',
-    'appRouterRedirect'
+    'cPath/common',
+    'cPath/appAgent',
+    'cPath/routerRedirect',
+    'view/viewIndex'
 ], function(
     Common,
-	PageView,
     appAgent,
-    routerRedirect
+    routerRedirect,
+    PageView
 ){
 
 	var ShowView = {

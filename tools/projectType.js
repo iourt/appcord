@@ -1,7 +1,7 @@
 var fs = require('fs');
 
 function getAllFiles () {
-	var root = './source/js/Page',
+	var root = './source/js/page',
 		result = [],
 		files = fs.readdirSync(root);
 

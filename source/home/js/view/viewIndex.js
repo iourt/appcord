@@ -1,7 +1,7 @@
 define([
 	'zepto',
 	'backbone',
-    'appCommon',
+    'cPath/common',
 
 	'layout/index.hbs'
 ], function(

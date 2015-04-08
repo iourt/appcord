@@ -249,7 +249,7 @@ var task = {
 	* 公共common app.*filename*.js
 	* 项目公共common prj.*filename*.js
 	*/
-	createCommon: function() {
+	createCommon: function(type) {
 		var self = this;
 
 		var prj = project(),
@@ -265,16 +265,32 @@ var task = {
 
 			tmpPath['app'+ tmpName] = 'common/'+ name;
 
-			rjs({
-				baseUrl: sourcePath,
-				out: 'common/app.'+ name +'.js',
-				include: [
-					'app'+ tmpName
-				],
-				paths: tmpPath
-			})
-			.pipe(uglify({outSourceMap: false}))
-			.pipe(gulp.dest(buildPath));
+			if (type == 'source') {
+
+				rjs({
+					baseUrl: sourcePath,
+					out: 'common/app.'+ name +'.js',
+					include: [
+						'app'+ tmpName
+					],
+					paths: tmpPath
+				})
+				.pipe(gulp.dest(sourcePath));
+
+			} else {
+
+				rjs({
+					baseUrl: sourcePath,
+					out: 'common/app.'+ name +'.js',
+					include: [
+						'app'+ tmpName
+					],
+					paths: tmpPath
+				})
+				.pipe(uglify({outSourceMap: false}))
+				.pipe(gulp.dest(buildPath));
+
+			}
 
 		});
 
@@ -291,19 +307,36 @@ var task = {
 
 				tmpPath['unit'+ tmpName] = 'js/common/'+ name;
 
-				rjs({
-					baseUrl: sourcePath + v,
-					out: 'js/common/unit.'+ name +'.js',
-					include: [
-						'unit'+ tmpName
-					],
-					paths: tmpPath
-				})
-				.pipe(uglify({outSourceMap: false}))
-				.pipe(gulp.dest(buildPath + v));
+				if (type == 'source') {
+
+					rjs({
+						baseUrl: sourcePath + v,
+						out: 'js/common/unit.'+ name +'.js',
+						include: [
+							'unit'+ tmpName
+						],
+						paths: tmpPath
+					})
+					.pipe(gulp.dest(sourcePath + v));
+
+				} else {
+
+					rjs({
+						baseUrl: sourcePath + v,
+						out: 'js/common/unit.'+ name +'.js',
+						include: [
+							'unit'+ tmpName
+						],
+						paths: tmpPath
+					})
+					.pipe(uglify({outSourceMap: false}))
+					.pipe(gulp.dest(buildPath + v));
+					
+				}
 			});
 
 		});
+
 	},
 
 	/*
@@ -374,6 +407,7 @@ gulp.task('default', function(){
 	task.templates();
 	task.sass('source');
 	task.createFrame('source');
+	// task.createCommon('source');
 
 	if (dev == 'debug') {
 		task.connect('source');
@@ -385,7 +419,7 @@ gulp.task('build', function(){
 	task.sass('build');
 	task.createFrame('build');
 	task.createConfig();
-	task.createCommon();
+	task.createCommon('build');
 	task.moveHtml();
 	task.minrjs();
 

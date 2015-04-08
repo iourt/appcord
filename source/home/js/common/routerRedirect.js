@@ -1,6 +1,6 @@
 ﻿define([
-    'unitRouter',
-    'appCommon'
+    'cPath/common',
+    'common/router'
 ], function (
     appCommon,
     router
