@@ -85,8 +85,27 @@
     // NOTE: To customize the view's frame size (which defaults to full screen), override
     // [self.viewController viewWillAppear:] in your view controller.
     
-    self.viewController.baseUserAgent = @"UserAgent AppUeWirelessIOS";
-
+    
+    // start ------------------------------------------------------
+    // update user agent
+    
+    // self.viewController.baseUserAgent = @"UserAgent AppUeWirelessIOS";
+    
+    UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectZero];
+    NSString *oldAgent = [webView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
+    // NSLog(@"old agent :%@", oldAgent);
+    
+    //add my info to the new agent
+    NSString *newAgent = [oldAgent stringByAppendingString:@" AppUeWirelessIos"];
+    // NSLog(@"new agent :%@", newAgent);
+    
+    //regist the new agent
+    // NSDictionary *dictionnary = [[NSDictionary alloc] initWithObjectsAndKeys:newAgent, @"UserAgent", nil];
+    // [[NSUserDefaults standardUserDefaults] registerDefaults:dictionnary];
+    
+    self.viewController.baseUserAgent = newAgent;
+    // end ------------------------------------------------------
+    
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
 

@@ -1,10 +1,12 @@
 define([
     'appCommon',
 	'view/viewIndex',
-    'cPath/routerRedirect'
+    'appueAppAgent'
+    'appuerouterRedirect'
 ], function(
     Common,
 	PageView,
+    appAgent,
     routerRedirect
 ){
 
