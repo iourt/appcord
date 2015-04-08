@@ -42,6 +42,10 @@ for (id subview in self.webView.subviews){
 然后设置key：View controller-based status bar appearance  为NO
 
 
-For a simple test, you can add the following to the didFinishLaunchingWithOptions method of the AppDelegate.m, after the MainViewController is initialized:
+
+四、For a simple test, you can add the following to the didFinishLaunchingWithOptions method of the AppDelegate.m, after the MainViewController is initialized:
+
+
+platforms/ios/Club/Classes/AppDelegate.m
 
 self.viewController.baseUserAgent = @"My Custom User Agent";
