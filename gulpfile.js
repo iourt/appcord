@@ -5,7 +5,7 @@ var fs   = require('fs'),
 var build     = require('./tools/build.js'),
 	project   = require('./tools/getProject.js'),
 	movefiles = require('./tools/moveFiles.js'),
-	pagename  = require('./tools/getPageName.js');
+	pagename  = require('./tools/getFilesName.js');
 
 var gulp 		 = require('gulp'),
 	sass         = require('gulp-sass'),
@@ -27,6 +27,14 @@ var dev = argv.dev,
 
 var d = new Date(),
     version = d.getTime();
+
+
+
+var a = "nihao";
+
+var b = a.charAt(0);
+
+console.log(b);
 
 
 var task = {
@@ -89,7 +97,7 @@ var task = {
 						'js': [
 							'../cordova.js?v='+ version,
 							'../cordova_plugins.js?v='+ version,
-							'../common/app.frame.js?v='+ version,
+							'../app.frame.js?v='+ version,
 							'js/common/prj.config.js?v='+ version,
 							'js/common/prj.router.js?v='+ version,
 							'../common/app.common.js?v='+ version
@@ -123,7 +131,7 @@ var task = {
 	*/ 
 	createFrame: function(type) {
 		var filePath = sourcePath,
-			fileName = 'common/frame.js',
+			fileName = 'frame.js',
 			isBuild = 0;
 
 		if (type == 'build') {
@@ -191,7 +199,7 @@ var task = {
 		prj.forEach(function(name) {
 			var path = sourcePath + name;
 			gulp.src([
-					path +'/js/common/config.js',
+					path +'/js/config.js',
 					path +'/js/app.js'
 				])
 				// .pipe(uglify({outSourceMap: false}))
@@ -232,29 +240,68 @@ var task = {
 
 	/*
 	* common 定义 和 common 函数生成
-	* app.common.js
+	* 公共common app.*filename*.js
+	* 项目公共common prj.*filename*.js
 	*/
 	createCommon: function() {
 		var strpath = {
-	        'zepto':      'empty:',
-	        'underscore': 'empty:',
-	        'backbone':   'empty:',
-	        'handlebars': 'empty:',
-	        'require':    'empty:',
-	        'router':     'empty:',
-	        'appCommon':  'common/common'
-		};
+		        'zepto':      'empty:',
+		        'underscore': 'empty:',
+		        'backbone':   'empty:',
+		        'handlebars': 'empty:',
+		        'require':    'empty:',
+		        'router':     'empty:'
+			};
 
-	    rjs({
-	        baseUrl: sourcePath,
-	        out: 'common/app.common.js',
-	        include: [
-	        	'appCommon'
-	        ],
-		    paths: strpath
-	    })
-		.pipe(uglify({outSourceMap: false}))
-		.pipe(gulp.dest(buildPath));
+		var prj = project(),
+			cName = pagename(2),
+			dName = JSON.parse(JSON.stringify(pagename(3)));
+
+		cName.forEach(function(name){
+			strpath['app'+ name] = 'empty:';
+		});
+
+		cName.forEach(function(name){
+			var tmppath = JSON.parse(JSON.stringify(strpath));
+
+			tmppath['app'+ name] = 'common/'+ name;
+
+			rjs({
+				baseUrl: sourcePath,
+				out: 'common/app.'+ name +'.js',
+				include: [
+					'app'+ name.replace(/^./, charAt(0).toUpperCase())
+				],
+				paths: tmppath
+			})
+			.pipe(uglify({outSourceMap: false}))
+			.pipe(gulp.dest(buildPath));
+		});
+
+		prj.forEach(function(v){
+			var prjpath = strpath;
+
+			dName[v].forEach(function(name){
+				prjpath['prj'+ name] = 'empty:';
+			});
+
+			dName[v].forEach(function(name){
+				var tmppath = JSON.parse(JSON.stringify(prjpath));
+
+				tmppath['prj'+ name] = 'js/common/'+ name;
+
+				rjs({
+					baseUrl: sourcePath + v,
+					out: 'js/common/prj.'+ name +'.js',
+					include: [
+						'prj'+ name.replace(/^./, charAt(0).toUpperCase())
+					],
+					paths: tmppath
+				})
+				.pipe(uglify({outSourceMap: false}))
+				.pipe(gulp.dest(buildPath + v));
+			});
+		});
 	},
 
 	/*
@@ -308,7 +355,7 @@ var task = {
 		};
 
 		var prj = project(),
-			files = pagename();
+			files = pagename(1);
 
 		prj.forEach(function(v){
 			files[v].forEach(function(name) {
@@ -326,9 +373,10 @@ var task = {
 }
 
 gulp.task('default', function(){
-	task.templates();
-	task.sass('source');
-	task.createFrame('source');
+	// task.templates();
+	// task.sass('source');
+	// task.createFrame('source');
+	// task.createCommon();
 
 	if (dev == 'debug') {
 		task.connect('source');
@@ -337,13 +385,13 @@ gulp.task('default', function(){
 
 gulp.task('build', function(){
 	// task.templates();
-	task.sass('build');
-	task.createFrame('build');
-	task.createConfig();
-	task.createRouter();
-	task.createCommon();
-	task.moveHtml();
-	task.minrjs();
+	// task.sass('build');
+	// task.createFrame('build');
+	// task.createConfig();
+	// task.createRouter();
+	// task.createCommon();
+	// task.moveHtml();
+	// task.minrjs();
 
 	if (dev == 'debug') {
 		task.connect('build');

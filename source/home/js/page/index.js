@@ -1,8 +1,8 @@
 define([
     'appCommon',
 	'view/viewIndex',
-    'appueAppAgent'
-    'appuerouterRedirect'
+    'appAppAgent'
+    'appRouterRedirect'
 ], function(
     Common,
 	PageView,
