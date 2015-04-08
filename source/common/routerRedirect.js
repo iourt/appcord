@@ -1,5 +1,5 @@
 ﻿define([
-    'cPath/common'
+    'appPath/common'
 ], function (
     appCommon
 ) {

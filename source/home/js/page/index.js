@@ -1,7 +1,7 @@
 define([
-    'cPath/common',
-    'cPath/appAgent',
-    'cPath/routerRedirect',
+    'appPath/common',
+    'appPath/appAgent',
+    'appPath/routerRedirect',
     'view/viewIndex'
 ], function(
     Common,

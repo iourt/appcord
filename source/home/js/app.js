@@ -2,7 +2,7 @@ require([
     'zepto',
 	'backbone',
     'require',
-    'common/router'
+    'unitPath/router'
 ],function(
     $, 
     Backbone, 

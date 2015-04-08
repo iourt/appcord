@@ -6,7 +6,8 @@ requirejs.config({
         'backbone':   'empty:',
         'handlebars': 'empty:',
         'require':    'empty:',
-        'cPath':      '../../common'
+        'appPath':    '../../common',
+        'unitPath':   'common'
     },
     urlArgs: createMinFileVersion ? 'v='+ createMinFileVersion : '',
     shim: {

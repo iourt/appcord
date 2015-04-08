@@ -119,17 +119,15 @@ var task = {
 		        'underscore': 'empty:',
 		        'backbone':   'empty:',
 		        'handlebars': 'empty:',
-		        'require':    'empty:'
+		        'require':    'empty:',
+		        'appPath':    '../../common',
+		        'unitPath':   'js/common'
 			};
 
 		var cName = pagename(2);
 
 		cName.forEach(function(name){
-			var tmpName = name;
-			
-			tmpName = tmpName.replace(/^./, tmpName.charAt(0).toUpperCase());
-
-			strPath['app'+ tmpName] = 'empty:';
+			strPath['appPath/'+ name] = 'empty:';
 		});
 
 		return JSON.parse(JSON.stringify(strPath));
@@ -260,18 +258,16 @@ var task = {
 
 			var tmpPath = self._getCommonName(),
 				tmpName = name;
-			
-			tmpName = tmpName.replace(/^./, tmpName.charAt(0).toUpperCase());
 
-			tmpPath['app'+ tmpName] = 'common/'+ name;
+			tmpPath['appPath/'+ tmpName] = 'common/'+ name;
 
 			if (type == 'source') {
 
 				rjs({
 					baseUrl: sourcePath,
-					out: 'common/app.'+ name +'.js',
+					out: 'common/'+ name +'.js',
 					include: [
-						'app'+ tmpName
+						'appPath/'+ tmpName
 					],
 					paths: tmpPath
 				})
@@ -281,9 +277,9 @@ var task = {
 
 				rjs({
 					baseUrl: sourcePath,
-					out: 'common/app.'+ name +'.js',
+					out: 'common/'+ name +'.js',
 					include: [
-						'app'+ tmpName
+						'appPath/'+ tmpName
 					],
 					paths: tmpPath
 				})
@@ -301,19 +297,17 @@ var task = {
 				var tmpPath = self._getUnitName()[v],
 					tmpName = name;
 
-				tmpName = tmpName.replace(/^./, tmpName.charAt(0).toUpperCase());
-
 				for(i in self._getCommonName()) tmpPath[i] = 'empty:';
 
-				tmpPath['unit'+ tmpName] = 'js/common/'+ name;
+				tmpPath['unitPath/'+ tmpName] = 'js/common/'+ name;
 
 				if (type == 'source') {
 
 					rjs({
 						baseUrl: sourcePath + v,
-						out: 'js/common/unit.'+ name +'.js',
+						out: 'js/common/'+ name +'.js',
 						include: [
-							'unit'+ tmpName
+							'unitPath/'+ tmpName
 						],
 						paths: tmpPath
 					})
@@ -323,9 +317,9 @@ var task = {
 
 					rjs({
 						baseUrl: sourcePath + v,
-						out: 'js/common/unit.'+ name +'.js',
+						out: 'js/common/'+ name +'.js',
 						include: [
-							'unit'+ tmpName
+							'unitPath/'+ tmpName
 						],
 						paths: tmpPath
 					})
@@ -396,7 +390,7 @@ var task = {
 					include: [ 'page/'+ name],
 					paths: tmpPath
 				})
-				// .pipe(uglify({outSourceMap: false}))
+				.pipe(uglify({outSourceMap: false}))
 				.pipe(gulp.dest(buildPath + v +'/js'));
 			});
 		});
