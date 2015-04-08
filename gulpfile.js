@@ -89,10 +89,10 @@ var task = {
 						'js': [
 							'../cordova.js?v='+ version,
 							'../cordova_plugins.js?v='+ version,
-							'../app.frame.js?v='+ version,
-							'js/common/prj.config.js?v='+ version,
-							'js/common/prj.router.js?v='+ version,
-							'../common/app.common.js?v='+ version
+							'../common/app.frame.js?v='+ version,
+							'js/common/unit.config.js?v='+ version
+							// 'js/common/unit.router.js?v='+ version,
+							// '../common/unit.common.js?v='+ version
 						]
 					})
 				)
@@ -238,41 +238,12 @@ var task = {
 					path +'/js/config.js',
 					path +'/js/app.js'
 				])
-				// .pipe(uglify({outSourceMap: false}))
-				.pipe(concat('prj.config.js'))
+				.pipe(uglify({outSourceMap: false}))
+				.pipe(concat('unit.config.js'))
 				.pipe(gulp.dest(buildPath + name +'/js/common/'))
 		});
 
 	},
-
-	/*
-	* router 定义 和 common 函数生成 各项目
-	* lib.common.js
-	*/
-	createRouter: function() {
-		var prj = project();
-
-		prj.forEach(function(name) {
-		    rjs({
-		        baseUrl: sourcePath,
-		        out: name +'/js/common/prj.router.js',
-		        include: [
-		        	'router'
-		        ],
-			    paths: {
-			        'zepto':      'empty:',
-			        'underscore': 'empty:',
-			        'backbone':   'empty:',
-			        'handlebars': 'empty:',
-			        'require':    'empty:',
-			        'router':     name +'/js/common/router'
-				}
-		    })
-			.pipe(uglify({outSourceMap: false}))
-			.pipe(gulp.dest(buildPath));
-		});
-	},
-
 
 	/*
 	* common 定义 和 common 函数生成
@@ -375,27 +346,25 @@ var task = {
     * 压缩JS
     */
 	minrjs: function() {
-		var strpath = {
-	        'zepto':      'empty:',
-	        'underscore': 'empty:',
-	        'backbone':   'empty:',
-	        'handlebars': 'empty:',
-	        'require':    'empty:',
-	        'cPath':      '../../common'
-		};
+		var self = this;
 
-		var prj = project(),
+		var strPath = self._getCommonName(),
+			prj = project(),
 			files = pagename(1);
 
 		prj.forEach(function(v){
+			var tmpPath = self._getUnitName()[v];
+
+			for(i in strPath) tmpPath[i] = 'empty:';
+
 			files[v].forEach(function(name) {
 				rjs({
 					baseUrl: sourcePath + v +'/js',
 					out: 'page/'+ name +'.js',
 					include: [ 'page/'+ name],
-					paths: strpath
+					paths: tmpPath
 				})
-				.pipe(uglify({outSourceMap: false}))
+				// .pipe(uglify({outSourceMap: false}))
 				.pipe(gulp.dest(buildPath + v +'/js'));
 			});
 		});
@@ -403,10 +372,9 @@ var task = {
 }
 
 gulp.task('default', function(){
-	// task.templates();
-	// task.sass('source');
-	// task.createFrame('source');
-	task.createCommon();
+	task.templates();
+	task.sass('source');
+	task.createFrame('source');
 
 	if (dev == 'debug') {
 		task.connect('source');
@@ -415,13 +383,12 @@ gulp.task('default', function(){
 
 gulp.task('build', function(){
 	// task.templates();
-	// task.sass('build');
-	// task.createFrame('build');
-	// task.createConfig();
-	// task.createRouter();
-	// task.createCommon();
-	// task.moveHtml();
-	// task.minrjs();
+	task.sass('build');
+	task.createFrame('build');
+	task.createConfig();
+	task.createCommon();
+	task.moveHtml();
+	task.minrjs();
 
 	if (dev == 'debug') {
 		task.connect('build');
