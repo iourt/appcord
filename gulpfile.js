@@ -261,32 +261,16 @@ var task = {
 
 			tmpPath['appPath/'+ tmpName] = 'common/'+ name;
 
-			if (type == 'source') {
-
-				rjs({
-					baseUrl: sourcePath,
-					out: 'common/'+ name +'.js',
-					include: [
-						'appPath/'+ tmpName
-					],
-					paths: tmpPath
-				})
-				.pipe(gulp.dest(sourcePath));
-
-			} else {
-
-				rjs({
-					baseUrl: sourcePath,
-					out: 'common/'+ name +'.js',
-					include: [
-						'appPath/'+ tmpName
-					],
-					paths: tmpPath
-				})
-				.pipe(uglify({outSourceMap: false}))
-				.pipe(gulp.dest(buildPath));
-
-			}
+			rjs({
+				baseUrl: sourcePath,
+				out: 'common/'+ name +'.js',
+				include: [
+					'appPath/'+ tmpName
+				],
+				paths: tmpPath
+			})
+			.pipe(uglify({outSourceMap: false}))
+			.pipe(gulp.dest(buildPath));
 
 		});
 
@@ -301,32 +285,16 @@ var task = {
 
 				tmpPath['unitPath/'+ tmpName] = 'js/common/'+ name;
 
-				if (type == 'source') {
-
-					rjs({
-						baseUrl: sourcePath + v,
-						out: 'js/common/'+ name +'.js',
-						include: [
-							'unitPath/'+ tmpName
-						],
-						paths: tmpPath
-					})
-					.pipe(gulp.dest(sourcePath + v));
-
-				} else {
-
-					rjs({
-						baseUrl: sourcePath + v,
-						out: 'js/common/'+ name +'.js',
-						include: [
-							'unitPath/'+ tmpName
-						],
-						paths: tmpPath
-					})
-					.pipe(uglify({outSourceMap: false}))
-					.pipe(gulp.dest(buildPath + v));
-					
-				}
+				rjs({
+					baseUrl: sourcePath + v,
+					out: 'js/common/'+ name +'.js',
+					include: [
+						'unitPath/'+ tmpName
+					],
+					paths: tmpPath
+				})
+				.pipe(uglify({outSourceMap: false}))
+				.pipe(gulp.dest(buildPath + v));
 			});
 
 		});
@@ -401,7 +369,6 @@ gulp.task('default', function(){
 	task.templates();
 	task.sass('source');
 	task.createFrame('source');
-	// task.createCommon('source');
 
 	if (dev == 'debug') {
 		task.connect('source');
@@ -413,7 +380,7 @@ gulp.task('build', function(){
 	task.sass('build');
 	task.createFrame('build');
 	task.createConfig();
-	task.createCommon('build');
+	task.createCommon();
 	task.moveHtml();
 	task.minrjs();
 
