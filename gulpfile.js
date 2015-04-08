@@ -83,16 +83,16 @@ var task = {
 				.pipe(
 					htmlreplace({
 						'css': [
-							'/themes/all.css?v='+ version,
-							'/themes/'+ name +'.css?v='+ version,
+							'../themes/all.css?v='+ version,
+							'../themes/'+ name +'.css?v='+ version,
 						],
 						'js': [
-							'/cordova.js?v='+ version,
-							'/cordova_plugins.js?v='+ version,
-							'/common/app.frame.js?v='+ version,
+							'../cordova.js?v='+ version,
+							'../cordova_plugins.js?v='+ version,
+							'../common/app.frame.js?v='+ version,
 							'js/common/prj.config.js?v='+ version,
 							'js/common/prj.router.js?v='+ version,
-							'/common/app.common.js?v='+ version
+							'../common/app.common.js?v='+ version
 						]
 					})
 				)
@@ -329,7 +329,10 @@ gulp.task('default', function(){
 	task.templates();
 	task.sass('source');
 	task.createFrame('source');
-	// task.connect('source');
+
+	if (dev == 'debug') {
+		task.connect('source');
+	}
 });
 
 gulp.task('build', function(){
@@ -341,5 +344,8 @@ gulp.task('build', function(){
 	task.createCommon();
 	task.moveHtml();
 	task.minrjs();
-	task.connect('build');
+
+	if (dev == 'debug') {
+		task.connect('build');
+	}
 });
