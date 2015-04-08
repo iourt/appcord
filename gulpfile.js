@@ -1,6 +1,7 @@
 var fs   = require('fs'),
 	argv = require('yargs').argv,
-	os   = require('os');
+	os   = require('os'),
+	util = require('util');
 
 var build     = require('./tools/build.js'),
 	project   = require('./tools/getProject.js'),
@@ -27,15 +28,6 @@ var dev = argv.dev,
 
 var d = new Date(),
     version = d.getTime();
-
-
-
-var a = "nihao";
-
-var b = a.charAt(0);
-
-console.log(b);
-
 
 var task = {
 	/*
@@ -120,6 +112,50 @@ var task = {
 		// 		]
 		// 	}))
 		// 	.pipe(gulp.dest(buildPath));
+	},
+
+	_getCommonName: function(){
+		var strPath = {
+		        'zepto':      'empty:',
+		        'underscore': 'empty:',
+		        'backbone':   'empty:',
+		        'handlebars': 'empty:',
+		        'require':    'empty:'
+			};
+
+		var cName = pagename(2);
+
+		cName.forEach(function(name){
+			var tmpName = name;
+			
+			tmpName = tmpName.replace(/^./, tmpName.charAt(0).toUpperCase());
+
+			strPath['app'+ tmpName] = 'empty:';
+		});
+
+		return JSON.parse(JSON.stringify(strPath));
+	},
+
+	_getUnitName: function() {
+		var self = this;
+
+		var result = {},
+			prj = project(),
+			dName = JSON.parse(JSON.stringify(pagename(3)));
+
+		prj.forEach(function(v){
+			result[v] = {};
+
+			dName[v].forEach(function(name){
+				var tmpName = name;
+
+				tmpName = tmpName.replace(/^./, tmpName.charAt(0).toUpperCase());
+
+				result[v]['unit'+ tmpName] = 'empty:';
+			});
+		});
+
+		return JSON.parse(JSON.stringify(result));
 	},
 
 	/*
@@ -244,63 +280,59 @@ var task = {
 	* 项目公共common prj.*filename*.js
 	*/
 	createCommon: function() {
-		var strpath = {
-		        'zepto':      'empty:',
-		        'underscore': 'empty:',
-		        'backbone':   'empty:',
-		        'handlebars': 'empty:',
-		        'require':    'empty:',
-		        'router':     'empty:'
-			};
+		var self = this;
 
 		var prj = project(),
 			cName = pagename(2),
 			dName = JSON.parse(JSON.stringify(pagename(3)));
 
-		cName.forEach(function(name){
-			strpath['app'+ name] = 'empty:';
-		});
+		// cName.forEach(function(name){
 
-		cName.forEach(function(name){
-			var tmppath = JSON.parse(JSON.stringify(strpath));
+		// 	var tmpPath = self._getCommonName(),
+		// 		tmpName = name;
+			
+		// 	tmpName = tmpName.replace(/^./, tmpName.charAt(0).toUpperCase());
 
-			tmppath['app'+ name] = 'common/'+ name;
+		// 	tmpPath['app'+ tmpName] = 'common/'+ name;
 
-			rjs({
-				baseUrl: sourcePath,
-				out: 'common/app.'+ name +'.js',
-				include: [
-					'app'+ name.replace(/^./, charAt(0).toUpperCase())
-				],
-				paths: tmppath
-			})
-			.pipe(uglify({outSourceMap: false}))
-			.pipe(gulp.dest(buildPath));
-		});
+		// 	rjs({
+		// 		baseUrl: sourcePath,
+		// 		out: 'common/app.'+ name +'.js',
+		// 		include: [
+		// 			'app'+ tmpName
+		// 		],
+		// 		paths: tmpPath
+		// 	})
+		// 	.pipe(uglify({outSourceMap: false}))
+		// 	.pipe(gulp.dest(buildPath));
+
+		// });
 
 		prj.forEach(function(v){
-			var prjpath = strpath;
 
 			dName[v].forEach(function(name){
-				prjpath['prj'+ name] = 'empty:';
-			});
 
-			dName[v].forEach(function(name){
-				var tmppath = JSON.parse(JSON.stringify(prjpath));
+				var tmpPath = self._getUnitName()[v],
+					tmpName = name;
 
-				tmppath['prj'+ name] = 'js/common/'+ name;
+				tmpName = tmpName.replace(/^./, tmpName.charAt(0).toUpperCase());
+
+				for(i in self._getCommonName()) tmpPath[i] = 'empty:';
+
+				tmpPath['unit'+ tmpName] = 'js/common/'+ name;
 
 				rjs({
 					baseUrl: sourcePath + v,
-					out: 'js/common/prj.'+ name +'.js',
+					out: 'js/common/unit.'+ name +'.js',
 					include: [
-						'prj'+ name.replace(/^./, charAt(0).toUpperCase())
+						'unit'+ tmpName
 					],
-					paths: tmppath
+					paths: tmpPath
 				})
-				.pipe(uglify({outSourceMap: false}))
+				// .pipe(uglify({outSourceMap: false}))
 				.pipe(gulp.dest(buildPath + v));
 			});
+
 		});
 	},
 
@@ -349,8 +381,6 @@ var task = {
 	        'backbone':   'empty:',
 	        'handlebars': 'empty:',
 	        'require':    'empty:',
-	        'router':     'empty:',
-	        'appCommon':  'empty:',
 	        'cPath':      '../../common'
 		};
 
@@ -376,7 +406,7 @@ gulp.task('default', function(){
 	// task.templates();
 	// task.sass('source');
 	// task.createFrame('source');
-	// task.createCommon();
+	task.createCommon();
 
 	if (dev == 'debug') {
 		task.connect('source');

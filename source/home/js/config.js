@@ -7,7 +7,7 @@ requirejs.config({
         'handlebars': 'empty:',
         'require':    'empty:',
 
-        'prjRouter':  'common/router',
+        'unitRouter': 'common/router',
         'appCommon':  '../../common/common',
         'cPath':      '../../common'
     },

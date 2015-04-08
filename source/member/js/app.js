@@ -1,13 +1,13 @@
 require([
     'zepto',
 	'backbone',
-    'router',
-    'require'
+    'require',
+    'unitRouter'
 ],function(
     $, 
-    Backbone, 
-    router, 
-    require
+    Backbone,
+    require,
+    router
 ){
     // homepage
     router.on('route:index', function(){

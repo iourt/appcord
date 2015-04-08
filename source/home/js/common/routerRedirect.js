@@ -1,5 +1,5 @@
 ﻿define([
-    'prjRouter',
+    'unitRouter',
     'appCommon'
 ], function (
     appCommon,
