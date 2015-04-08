@@ -1,6 +1,6 @@
 define([
     'appPath/routerRedirect',
-	'layout/index.hbs'
+	'layout/list.hbs'
 ], function(
     routerRedirect,
     tmpl
@@ -11,7 +11,7 @@ define([
 		template: tmpl,
 
         events: {
-            'click .js_link': 'toList'
+            'click .js_back': 'toBack'
         },
 
         initialize: function() {
@@ -26,13 +26,12 @@ define([
             return this;
         },
 
-        toList: function() {
+        toBack: function() {
             var self = this;
 
-            routerRedirect.toJump({
+            routerRedirect.toBack({
                 opts: {
-                    'direction': 'left',
-                    'href': '#list'
+                    'href': '#index'
                 },
                 callback: function(){
                     alert(2);

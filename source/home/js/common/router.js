@@ -9,6 +9,7 @@ define([
         routes: {
             '': 'index',
             'index': 'index', //--首页
+            'list': 'list'
         }
     });
 

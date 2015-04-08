@@ -1,5 +1,7 @@
 ﻿define([
+    'appPath/routerRedirect'
 ], function (
+    routerRedirect
 ) {
 
     var setCommon = {
@@ -37,6 +39,22 @@
                     elem.scrollTop = elem.scrollHeight - elem.offsetHeight - 1;
 
             }, false);
+        },
+
+        setMenu: function() {
+            var self = this;
+
+            $('.js_menu').on('click', function(){
+                routerRedirect.toJump({
+                    opts: {
+                        'direction': 'left',
+                        'href': '#list'
+                    },
+                    callback: function(){
+                        alert(2);
+                    }
+                });
+            });
         }
     }
 

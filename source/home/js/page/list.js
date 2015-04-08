@@ -1,10 +1,8 @@
 define([
     'appPath/appAgent',
-    'appPath/common',
-    'view/viewIndex'
+    'view/viewList'
 ], function(
     appAgent,
-    appCommon,
     PageView
 ){
     var isHybrid = appAgent.isHybrid();
@@ -17,8 +15,6 @@ define([
             var pageView = new PageView();
         
             $(".js_view").html(pageView.render().el);
-
-            appCommon.setMenu();
         }
 		
 	};
