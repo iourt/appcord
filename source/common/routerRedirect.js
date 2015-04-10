@@ -1,8 +1,11 @@
 ﻿define([
-    'appPath/common'
+    'appPath/common',
+    'appPath/appAgent'
 ], function (
-    appCommon
+    appCommon,
+    appAgent
 ) {
+    var isHybrid = appAgent.isHybrid();
 
     var routerRedirect = {
         /*
@@ -10,6 +13,13 @@
         */
         toBack: function (params) {
             var self = this;
+
+            if (!isHybrid) {
+                
+                window.location.href = params.opts.href;
+
+                return;
+            }
 
             params.opts.direction = 'right';
 
@@ -41,6 +51,13 @@
         */
         toJump: function (params) {
             var self = this;
+
+            if (!isHybrid) {
+
+                window.location.href = params.opts.href;
+
+                return;
+            }
 
             self._slide(params);
         },
