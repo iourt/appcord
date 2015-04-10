@@ -19,7 +19,9 @@ var gulp 		 = require('gulp'),
 	rjs          = require('gulp-requirejs'),
 	uglify       = require('gulp-uglify'),
 	shell        = require('gulp-shell'),
-	defineModule = require('gulp-define-module');
+	watch        = require('gulp-watch'),
+	defineModule = require('gulp-define-module'),
+	plumber      = require('gulp-plumber');
 
 var dev = argv.dev,
 	sourcePath = './source/', //--------源代码目录
@@ -35,7 +37,8 @@ var task = {
 	* npm install --save-dev gulp-define-module
 	*/
 	templates: function() {
-		gulp.src('./source/**/*.hbs')
+		gulp.src(sourcePath +'**/*.hbs')
+			.pipe(plumber())
 			.pipe(handlebars())
 			.pipe(defineModule('amd'))
 			.pipe(movefiles(function(path){
@@ -56,6 +59,7 @@ var task = {
 		if (type == 'build') {
 
 			gulp.src(sourcePath +'themes/*.scss')
+				.pipe(plumber())
 				.pipe(sass())
 				.pipe(minifycss())
 				.pipe(gulp.dest(buildPath +'themes'));
@@ -63,6 +67,7 @@ var task = {
 		} else {
 
 			gulp.src(sourcePath +'themes/*.scss')
+				.pipe(plumber())
 				.pipe(sass())
 				.pipe(gulp.dest(sourcePath +'themes'));
 
@@ -362,6 +367,30 @@ var task = {
 				.pipe(gulp.dest(buildPath + v +'/js'));
 			});
 		});
+	},
+
+	/*
+	* npm install --save-dev gulp-plumber
+	* npm install --save-dev gulp-watch
+	*/
+	watch: function(){
+		var self = this;
+
+		gulp.src(sourcePath +'**/*.hbs')
+			.pipe(watch(sourcePath +'**/*.hbs'))
+			.pipe(plumber())
+			.pipe(handlebars())
+			.pipe(defineModule('amd'))
+			.pipe(movefiles(function(path){
+				// path.dirname = strpath;
+				path.basename += '.hbs';
+				path.extname = '.js'
+			}))
+			.pipe(gulp.dest(''));
+
+		gulp.watch(sourcePath +'themes/**/*.scss', function() {
+	            self.sass('source');
+	        });
 	}
 }
 
@@ -371,6 +400,7 @@ gulp.task('default', function(){
 	task.createFrame('source');
 
 	if (dev == 'debug') {
+		task.watch();
 		task.connect('source');
 	}
 });
