@@ -21,6 +21,8 @@ var gulp 		 = require('gulp'),
 	shell        = require('gulp-shell'),
 	watch        = require('gulp-watch'),
 	defineModule = require('gulp-define-module'),
+	clean        = require('gulp-clean'),
+	livereload   = require('gulp-livereload')
 	plumber      = require('gulp-plumber');
 
 var dev = argv.dev,
@@ -376,6 +378,8 @@ var task = {
 	watch: function(){
 		var self = this;
 
+		livereload.listen();
+
 		gulp.src(sourcePath +'**/*.hbs')
 			.pipe(watch(sourcePath +'**/*.hbs'))
 			.pipe(plumber())
@@ -386,16 +390,27 @@ var task = {
 				path.basename += '.hbs';
 				path.extname = '.js'
 			}))
-			.pipe(gulp.dest(''));
+			.pipe(gulp.dest(''))
+			.pipe(livereload());
 
-		gulp.watch(sourcePath +'themes/**/*.scss', function() {
+		gulp.src(sourcePath +'themes/**/*.scss')
+			.pipe(watch(sourcePath +'themes/**/*.scss', function() {
 	            self.sass('source');
-	        });
+	        }))
+			.pipe(livereload());
 	}
 }
 
-gulp.task('default', function(){
+gulp.task('templates', function(){
 	task.templates();
+});
+
+gulp.task('clean', function () {
+	gulp.src(buildPath, {read: true})
+		.pipe(clean());
+});
+
+gulp.task('default', ['templates'], function(){
 	task.sass('source');
 	task.createFrame('source');
 
@@ -406,7 +421,6 @@ gulp.task('default', function(){
 });
 
 gulp.task('build', function(){
-	// task.templates();
 	task.sass('build');
 	task.createFrame('build');
 	task.createConfig();
