@@ -47,28 +47,30 @@
             var direction = 'left';
                 url = '';
 
-            $('.js_menu li').on('click', function(){
+            $('.js_menu li').off().on('click', function(){
+
                 var type = $(this).data('type');
 
                 switch (type){
                     case 'home':
-                        url = '#index';
+                        url = '/home/#index';
                     break;
 
                     case 'find':
-                        url = '#list';
+                        url = '/home/#list';
                     break;
 
                     case 'img':
-                        url = '#list';
+                        url = '/home/#list';
                     break;
 
                     case 'msg':
-                        url = '#list';
+                        url = '/home/#list';
                     break;
 
                     case 'user':
-                        url = 'member/#index';
+                        alert('1');
+                        url = '/member/#index';
                     break;
                 }
 
@@ -81,6 +83,7 @@
                         alert(2);
                     }
                 });
+                
             });
         }
     }
