@@ -16,13 +16,6 @@ require([
         });
     });
 
-    // list
-    router.on('route:list', function(){
-        require(['page/list'], function(ShowView){
-            ShowView.init();
-        });
-    });
-
     // router start
     Backbone.history.start();
 });

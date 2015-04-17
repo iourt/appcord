@@ -8,8 +8,7 @@ define([
     var AppRouter = Backbone.Router.extend({
         routes: {
             '': 'index',
-            'index': 'index', //--首页
-            'list': 'list'
+            'index': 'index'
         }
     });
 
