@@ -44,11 +44,38 @@
         setMenu: function() {
             var self = this;
 
-            $('.js_menu').on('click', function(){
+            var direction = 'left';
+                url = '';
+
+            $('.js_menu li').on('click', function(){
+                var type = $(this).data('type');
+
+                switch (type){
+                    case 'home':
+                        url = '#index';
+                    break;
+
+                    case 'find':
+                        url = '#list';
+                    break;
+
+                    case 'img':
+                        url = '#list';
+                    break;
+
+                    case 'msg':
+                        url = '#list';
+                    break;
+
+                    case 'user':
+                        url = '#list';
+                    break;
+                }
+
                 routerRedirect.toJump({
                     opts: {
-                        'direction': 'left',
-                        'href': '#list'
+                        'direction': direction,
+                        'href': url
                     },
                     callback: function(){
                         alert(2);

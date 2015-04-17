@@ -1,8 +1,10 @@
 define([
     'appPath/appAgent',
-    'view/viewList'
+    'appPath/common',
+    'view/viewIndex'
 ], function(
     appAgent,
+    appCommon,
     PageView
 ){
     var isHybrid = appAgent.isHybrid();
