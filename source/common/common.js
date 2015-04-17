@@ -68,7 +68,7 @@
                     break;
 
                     case 'user':
-                        url = '#list';
+                        url = '../member/#index';
                     break;
                 }
 
