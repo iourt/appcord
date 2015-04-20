@@ -63,20 +63,6 @@
                         ];
                     break;
 
-                    case 'find':
-                        url = [
-                            'home/#list',
-                            '/home/index.html#list'
-                        ];
-                    break;
-
-                    case 'user':
-                        url = [
-                            'member/#index',
-                            '/member/index.html#index'
-                        ];
-                    break;
-
                     //--摄像功能
                     case 'img':
                         url = [
