@@ -1,8 +1,12 @@
 ﻿define([
-    'appPath/routerRedirect'
+    'appPath/routerRedirect',
+    'appPath/appAgent'
 ], function (
-    routerRedirect
+    routerRedirect,
+    appAgent
 ) {
+
+    var isHybrid = appAgent.isHybrid();
 
     var setCommon = {
 
@@ -45,7 +49,7 @@
             var self = this;
 
             var direction = 'left';
-                url = '';
+                url = [];
 
             $('.js_menu li').off().on('click', function(){
 
@@ -53,24 +57,24 @@
 
                 switch (type){
                     case 'home':
-                        url = '/home/#index';
+                        url = [
+                            'home/#index',
+                            '/home/index.html#index'
+                        ];
                     break;
 
                     case 'find':
-                        url = '/home/#list';
-                    break;
-
-                    case 'img':
-                        url = '/home/#list';
-                    break;
-
-                    case 'msg':
-                        url = '/home/#list';
+                        url = [
+                            'home/#list',
+                            '/home/index.html#list'
+                        ];
                     break;
 
                     case 'user':
-                        alert('1');
-                        url = '/member/#index';
+                        url = [
+                            'member/#index',
+                            '/member/index.html#index'
+                        ];
                     break;
                 }
 
@@ -80,7 +84,7 @@
                         'href': url
                     },
                     callback: function(){
-                        alert(2);
+                        console.log('回调');
                     }
                 });
                 
