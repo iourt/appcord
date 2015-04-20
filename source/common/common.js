@@ -85,7 +85,7 @@
                     },
                     callback: function(){
 
-                        if ( typeof (callback) == "function" )
+                        if ( typeof (callback) == "function" ) {
                             callback();
                         } else {
                             console.log('success');
