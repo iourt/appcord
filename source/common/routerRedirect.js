@@ -53,8 +53,8 @@
             var self = this;
 
             if (!isHybrid) {
-
-                window.location.href = window.location.origin + params.opts.href[0];
+                
+                window.location.href = window.location.origin +'/'+ params.opts.href[0];
 
                 return;
             }
