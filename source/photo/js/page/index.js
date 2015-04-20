@@ -18,7 +18,7 @@ define([
         
             $(".js_view").html(pageView.render().el);
 
-            // appCommon.setMenu();
+            appCommon.setMenu();
 
             // alert(JSON.stringify(window.navigator));
 

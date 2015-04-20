@@ -83,8 +83,6 @@
                             'photo/#index',
                             '/photo/index.html#index'
                         ];
-
-                        self.setCamera();
                     break;
                 }
 
@@ -104,22 +102,6 @@
                     }
                 });
                 
-            });
-        },
-
-        setCamera: function(){
-            var self = this;
-
-            alert(1);
-
-            navigator.getUserMedia({ 'video': true }, function (stream) {
-
-                alert(stream);
-
-            }, function(error){
-
-                alert(error);
-
             });
         }
     }
