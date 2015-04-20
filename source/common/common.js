@@ -45,7 +45,7 @@
             }, false);
         },
 
-        setMenu: function() {
+        setMenu: function(callback) {
             var self = this;
 
             var direction = 'left';
@@ -84,7 +84,13 @@
                         'href': url
                     },
                     callback: function(){
-                        console.log('回调');
+
+                        if ( typeof (callback) == "function" )
+                            callback();
+                        } else {
+                            console.log('success');
+                        }
+                        
                     }
                 });
                 
