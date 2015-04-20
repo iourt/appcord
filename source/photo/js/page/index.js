@@ -18,19 +18,9 @@ define([
         
             $(".js_view").html(pageView.render().el);
 
+            appCommon.scrollFix('.js_view');
+            
             appCommon.setMenu();
-
-            // alert(JSON.stringify(window.navigator));
-
-            // window.navigator.webkitGetUserMedia({ 'video': true }, function (stream) {
-
-            //     alert(JSON.stringify(stream));
-
-            // }, function(error){
-
-            //     alert(error);
-
-            // });
         }
 		
 	};

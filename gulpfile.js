@@ -89,8 +89,8 @@ var task = {
 				.pipe(
 					htmlreplace({
 						'css': [
-							'../themes/all.css?v='+ version,
-							'../themes/'+ name +'.css?v='+ version,
+							// '../themes/all.css?v='+ version,
+							'../themes/'+ name +'.css?v='+ version
 						],
 						'js': [
 							'../cordova.js?v='+ version,

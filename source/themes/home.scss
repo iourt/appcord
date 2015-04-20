@@ -1,5 +1,9 @@
-﻿.unit_home{
-    padding: 20px;
-    padding-top: 30px;
+﻿@import "scss/border.scss";
+@import "scss/reset.scss";
+@import "scss/footer.scss";
+
+.unit_home{
+    @include scrollfix;
+    padding: 30px 10px 48px 10px;
     line-height: 20px;
 }

@@ -18,6 +18,8 @@ define([
         
             $(".js_view").html(pageView.render().el);
 
+            appCommon.scrollFix('.js_scrollfix');
+            
             appCommon.setMenu();
         }
 		

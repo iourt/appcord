@@ -21,9 +21,11 @@ define([
         },
 
         render: function() {
-            this.setElement( this.template() );
+            var self = this;
 
-            return this;
+            self.setElement( self.template() );
+
+            return self;
         },
 
         toList: function() {
