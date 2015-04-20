@@ -76,6 +76,16 @@
                             '/member/index.html#index'
                         ];
                     break;
+
+                    //--摄像功能
+                    case 'img':
+                        url = [
+                            'photo/#index',
+                            '/photo/index.html#index'
+                        ];
+
+                        self.setCamera();
+                    break;
                 }
 
                 routerRedirect.toJump({
@@ -94,6 +104,22 @@
                     }
                 });
                 
+            });
+        },
+
+        setCamera: function(){
+            var self = this;
+
+            alert(1);
+
+            navigator.getUserMedia({ 'video': true }, function (stream) {
+
+                alert(stream);
+
+            }, function(error){
+
+                alert(error);
+
             });
         }
     }
