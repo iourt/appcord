@@ -59,7 +59,7 @@
                     case 'home':
                         url = [
                             'home/#index',
-                            '/home/index.html#index'
+                            'home/index.html#index'
                         ];
                     break;
 
@@ -67,7 +67,7 @@
                     case 'img':
                         url = [
                             'photo/#index',
-                            '/photo/index.html#index'
+                            'photo/index.html#index'
                         ];
                     break;
                 }
