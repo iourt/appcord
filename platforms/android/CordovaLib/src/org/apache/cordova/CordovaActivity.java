@@ -364,6 +364,12 @@ public class CordovaActivity extends Activity implements CordovaInterface {
         // If keepRunning
         this.keepRunning = preferences.getBoolean("KeepRunning", true);
 
+        String userAgent = appView.getSettings().getUserAgentString();
+        // can append or redefine here
+        userAgent += " AppUeWirelessAndroid";
+
+        appView.getSettings().setUserAgentString(userAgent);
+
         appView.loadUrlIntoView(url, true);
     }
 

@@ -49,3 +49,14 @@ for (id subview in self.webView.subviews){
 platforms/ios/Club/Classes/AppDelegate.m
 
 self.viewController.baseUserAgent = @"My Custom User Agent";
+
+platforms/android/CordovaLib/src/org/apache/cordova/CordovaActivity.java
+
+----------------------
+        String userAgent = appView.getSettings().getUserAgentString();
+        // can append or redefine here
+        userAgent += " AppUeWirelessAndroid";
+
+        appView.getSettings().setUserAgentString(userAgent);
+
+        appView.loadUrlIntoView(url, true);
